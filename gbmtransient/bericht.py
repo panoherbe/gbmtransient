@@ -56,7 +56,7 @@ def de(x, nd: int = 0) -> str:
     if x is None or (isinstance(x, float) and not math.isfinite(x)):
         return "–"
     s = f"{x:,.{nd}f}"
-    return s.replace(",", "X").replace(".", ",").replace("X", ".")
+    return s.replace(",", "X").replace(".", ",").replace("X", ".").replace("-", "−")
 
 
 def pz(x, nd: int = 0) -> str:
@@ -98,6 +98,7 @@ def optimieren(tage: list[dict], trig: list[dict]) -> dict:
     zwilling = INDEX[Konfig(b.k, "zweiseitig" if b.modus == "kausal" else "kausal", b.w, b.zs, b.band)]
     bew["test"]["zwilling"] = optimierung.bewerten(tage, test, zwilling, float(w["s"][zwilling]), typen)
     bew["test"]["zwilling"]["name"] = KONFIGS[zwilling].name()
+    bew["test"]["zwilling"]["bindend"] = str(w["bindend"][zwilling])
     bew["test"]["schwelle_test_waere"] = {"beste": optimierung.schwelle_auf(tage, test, beste),
                                           "grund": optimierung.schwelle_auf(tage, test, grund)}
     inj_test = optimierung.injektionen(tage, test)
@@ -461,7 +462,7 @@ def bericht_md(r: dict) -> str:
     else:
         folge2 = "Die Schwelle legt die Rate zufälliger Koinzidenzen fest."
     besser = "zweiseitige" if (ug["zweiseitig"]["bestes_j_test"] or 0) >= (ug["kausal"]["bestes_j_test"] or 0) else "kausale"
-    folge3 = (f"Die Rangfolge überträgt sich auf ungesehene Tage (Rangkorrelation {de(o['rangkorrelation_train_test'], 2)}); "
+    folge3 = (f"Die Rangfolge überträgt sich auf ungesehene Tage (Rangkorrelation {de(o['rangkorrelation_train_test'], 4)}); "
               f"der {besser} Untergrund erreicht das höhere J (bestes J Test zweiseitig "
               f"{pz(ug['zweiseitig']['bestes_j_test'] or 0, 1)}, kausal {pz(ug['kausal']['bestes_j_test'] or 0, 1)}).")
     schwaecher = ik["staerke50_cts_s"] < gk["staerke50_cts_s"] and il["staerke50_cts_s"] < gl["staerke50_cts_s"]
@@ -500,20 +501,21 @@ def bericht_md(r: dict) -> str:
                       "laufende Nachkalibrierung." if bt["zufall"]["je_tag"] > o["far_max_je_tag"] else ""))
     zw = b["test"]["zwilling"]
     zwilling_satz = (f"Dieselbe Konfiguration mit {'zweiseitigem' if best['untergrund'] == 'kausal' else 'kausalem'} "
-                     f"Untergrund erreicht auf den Testtagen J = {pz(zw['j'], 1)} (kurz {pz(zw['injektionen']['kurz']['quote'], 1)}, "
-                     f"lang {pz(zw['injektionen']['lang']['quote'], 1)}; gewählt: kurz {pz(ik['quote'], 1)}, lang "
-                     f"{pz(il['quote'], 1)})" + (". Vermutlich fällt beim zweiseitigen Untergrund der Ausläufer eines "
-                     f"Pulses in das hintere Untergrundfenster und hebt den geschätzten Untergrund an."
-                     if best['untergrund'] == 'kausal' and zw['j'] < bt['j'] else "."))
+                     f"Untergrund braucht für dieselben Nebenbedingungen {de(zw['schwelle'], 2)} statt "
+                     f"{de(bt['schwelle'], 2)} σ ({'mehr unbestätigte Kandidaten' if zw.get('bindend') == 'pruefaufwand' else 'mehr Zufallskoinzidenzen'} "
+                     f"auf den Trainingstagen) und erreicht auf den Testtagen J = {pz(zw['j'], 1)} (kurz "
+                     f"{pz(zw['injektionen']['kurz']['quote'], 1)}, lang {pz(zw['injektionen']['lang']['quote'], 1)}; gewählt: "
+                     f"kurz {pz(ik['quote'], 1)}, lang {pz(il['quote'], 1)}).")
     gv = r["grb_verpasst"]
     kurz_verpasst = [x for x in gv if x["t90_s"] is not None and x["t90_s"] < 2]
+    kurz_bord = [x for x in kurz_verpasst if x["bord_zeitskala_ms"] is not None and x["bord_zeitskala_ms"] < 256]
     verpasst_satz = (f"Von den {len(gv)} nicht erkannten Gammablitzen sind {len(kurz_verpasst)} kurz (T90 "
-                     f"{de(min((x['t90_s'] for x in kurz_verpasst), default=0), 2)}–"
-                     f"{de(max((x['t90_s'] for x in kurz_verpasst), default=0), 2)} s); an Bord ausgelöst auf Zeitskalen "
-                     f"von {', '.join(de(v, 0) for v in sorted({x['bord_zeitskala_ms'] for x in gv if x['bord_zeitskala_ms'] is not None}))} ms. "
-                     + ("Die kürzeste Zeitskala hier ist 256 ms; für sehr kurze, schwache Ausbrüche ist CTIME zu grob."
-                        if any(x["bord_zeitskala_ms"] is not None and x["bord_zeitskala_ms"] < 256 for x in gv) else "")
-                     ) if gv else ""
+                     f"{de(min((x['t90_s'] for x in kurz_verpasst), default=0), 2)} bis "
+                     f"{de(max((x['t90_s'] for x in kurz_verpasst), default=0), 2)} s); {len(kurz_bord)} davon hat der "
+                     f"Bord-Trigger auf Zeitskalen von "
+                     f"{' bis '.join(de(v / 1000, 3) for v in sorted({x['bord_zeitskala_ms'] for x in kurz_bord})[::max(len(kurz_bord) - 1, 1)])} s "
+                     f"ausgelöst, kürzer als die kürzeste Zeitskala hier (0,256 s). Für sehr kurze, schwache Ausbrüche "
+                     f"ist CTIME zu grob.") if kurz_bord else (f"{len(gv)} Gammablitze wurden nicht erkannt." if gv else "")
     grenze_far = (f" Die auf Trainingstagen bestimmte Schwelle hält die Grenze für zufällige Fehlalarme auf den "
                   f"Testtagen nicht ({de(bt['zufall']['je_tag'], 2)} je Tag)." if bt["zufall"]["je_tag"] > o["far_max_je_tag"]
                   else "")
@@ -571,7 +573,7 @@ Vorhaben ist davon unabhängig: eigene Fragestellung, eigener Code, Messdaten vo
 | Quelle | HEASARC, NASA Goddard Space Flight Center, `https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/daily/`; GBM-Daten waren nach der Datenpolitik der Mission zu keiner Zeit proprietär; „HEASARC materials are all available freely for your use“ (HEASARC, Use of HEASARC Data) |
 | Rohablage | {de(d['manifest_eintraege'])} Dateien, jede mit URL, SHA-256 und Abrufzeit im Manifest (SHA-256 des Manifests `{d['manifest_sha256'][:16]}…`); ausgewertet wird nur aus der Ablage, jede Datei wird vor dem Lesen geprüft |
 | Zeitraum | {datetime.fromisoformat(d['von']).strftime('%d.%m.%Y')}–{datetime.fromisoformat(d['bis']).strftime('%d.%m.%Y')}; im Triggerkatalog {kat['trigger_im_zeitraum']} Bord-Trigger, davon {kat['nach_typ'].get('GRB', {}).get('gesamt', 0)} Gammablitze |
-| Abdeckung | {pz(d['abdeckung'], 1)} der Zeit mit Daten von mindestens sechs Detektoren; von {de(d['luecke_h'], 0)} h ohne Daten liegen {pz(d['luecke_in_saa_anteil'])} in Durchgängen durch die Südatlantische Anomalie (Kennung der Positionsdatei; die Detektoren sind dort abgeschaltet) |
+| Abdeckung | {pz(d['abdeckung'], 1)} der Zeit mit Daten von mindestens sechs Detektoren; von {de(d['luecke_h'], 0)} h ohne Daten liegen {pz(d['luecke_in_saa_anteil'], 1)} in Durchgängen durch die Südatlantische Anomalie (Kennung der Positionsdatei; die Detektoren sind dort abgeschaltet) |
 
 ## 3 Verfahren
 
@@ -695,7 +697,10 @@ Triggerzeit des Katalogs. {folge5} {verpasst_satz}
 Katalog-Trigger: {kd['nahe_datenluecke_120s']} liegen höchstens 120 s neben einer Datenlücke (Rand der
 Südatlantischen Anomalie), {kd['weich_sonne_sichtbar']} sind weich (mehr Überschuss in 27–50 als in 50–300 keV)
 bei sichtbarer Sonne (vermutlich schwache Sonneneruptionen), {kd['uebrige']} bleiben ohne Zuordnung. Das ist
-eine Einordnung nach Merkmalen, keine Bestätigung.
+eine Einordnung nach Merkmalen, keine Bestätigung. Allein am {td['top_unbestaetigt'][0]['datum'][8:10]}.{td['top_unbestaetigt'][0]['datum'][5:7]}.{td['top_unbestaetigt'][0]['datum'][:4]}
+meldet sie {td['top_unbestaetigt'][0]['unbestaetigt']}, die meisten kurz vor einer Datenlücke und in allen Detektoren zugleich: der
+steile Anstieg am Rand der Südatlantischen Anomalie. Ein Schutzabstand vor Datenlücken würde diese Klasse
+vermutlich entfernen; er ist nicht umgesetzt.
 
 ## 5 Prüfung des Antwortmodells
 
