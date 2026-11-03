@@ -304,16 +304,26 @@ def test_ende_zu_ende(tmp_path):
         mit_abb = True
     except ImportError:
         mit_abb = False
-    r = auswerten(raw, aus, prozesse=1, abbildungen=mit_abb)
+    zw = tmp_path / "zwischen.pkl.gz"
+    r = auswerten(raw, aus, prozesse=1, abbildungen=mit_abb, zwischen=zw)
     assert (aus / "ergebnisse.json").exists() and (aus / "BERICHT.md").exists()
     assert r["daten"]["tage"] == 2 and r["katalog"]["trigger_im_zeitraum"] == 1
     grb = r["bewertung"]["alle"]["beste"]["katalog"]["GRB"]
     assert grb["abgedeckt"] == 1 and grb["erkannt"] == 1
     assert r["nullverteilung"]["std"] == pytest.approx(1, abs=0.1)
     if mit_abb:
-        assert len(list((aus / "abbildungen").glob("*.png"))) == 6
+        assert len(list((aus / "abbildungen").glob("*.png"))) == 5
     zeilen = (aus / "katalog_abgleich.csv").read_text(encoding="utf-8").splitlines()
     assert zeilen[1].startswith("bn250901021,GRB")
+    # Bericht aus dem Zwischenstand: dieselben Kennzahlen ohne neue Rechnung
+    from gbmtransient.bericht import bericht_aus_zwischenstand
+
+    r2 = bericht_aus_zwischenstand(zw, tmp_path / "neu", abbildungen=False)
+    ohne = ("erstellt", "rechenzeit_s")
+    a = json.loads((aus / "ergebnisse.json").read_text(encoding="utf-8"))
+    b = json.loads((tmp_path / "neu" / "ergebnisse.json").read_text(encoding="utf-8"))
+    assert {k: v for k, v in a.items() if k not in ohne} == {k: v for k, v in b.items() if k not in ohne}
+    assert r2["daten"]["tage"] == 2
 
 
 def test_pruefsumme_wird_geprueft(tmp_path):

@@ -63,28 +63,22 @@ def pz(x, nd: int = 0) -> str:
     return de(100 * x, nd) + " %"
 
 
-def auswerten(raw: Path, aus: Path, prozesse: int = 8, max_tage: int | None = None, abbildungen: bool = True) -> dict:
-    t_start = time.time()
-    raw, aus = Path(raw), Path(aus)
-    aus.mkdir(parents=True, exist_ok=True)
-    zeiten: dict[str, float] = {}
+def wiss(x, nd: int = 1) -> str:
+    """Zahl als a·10^b mit hochgestelltem Exponenten."""
+    if x is None or x <= 0:
+        return de(x, nd)
+    e = int(math.floor(math.log10(x)))
+    hoch = str(e).translate(str.maketrans("-0123456789", "⁻⁰¹²³⁴⁵⁶⁷⁸⁹"))
+    return f"{de(x / 10 ** e, nd)}·10{hoch}"
 
-    t = time.time()
-    man = einlesen.manifest(raw)
-    tage_d = einlesen.tagesdateien(man)
-    daten = sorted(tage_d)[:max_tage] if max_tage else sorted(tage_d)
-    trig = einlesen.katalog_lesen(raw, man, "fermigtrig")
-    brst = {z["trigger_name"]: z for z in einlesen.katalog_lesen(raw, man, "fermigbrst")}
-    tag_von = {d: [x for x in trig if utc_aus_met(x["met"]).strftime("%Y-%m-%d") == d] for d in daten}
-    alle_met = np.array([x["met"] for x in trig])
-    zeiten["kataloge_s"] = time.time() - t
 
-    t = time.time()
-    aufgaben = [(str(raw), d, tage_d[d], tag_von[d], alle_met, i) for i, d in enumerate(daten)]
-    tage = _parallel(suche.tag_rechnen, aufgaben, prozesse)
-    zeiten["durchgang1_s"] = time.time() - t
+def strich(t: str) -> str:
+    """Bereiche im Text mit Gedankenstrich: 50-300 -> 50–300."""
+    return t.replace("-", "–")
 
-    t = time.time()
+
+def optimieren(tage: list[dict], trig: list[dict]) -> dict:
+    """Wahl der Konfiguration auf den Trainingstagen und Bewertung (schnell; liest nur die Tageszusammenfassungen)."""
     train, test = optimierung.aufteilen(tage)
     w = optimierung.waehlen(tage, train)
     beste, grund = w["beste"], INDEX[GRUND]
@@ -108,42 +102,104 @@ def auswerten(raw: Path, aus: Path, prozesse: int = 8, max_tage: int | None = No
                                           "grund": optimierung.schwelle_auf(tage, test, grund)}
     inj_test = optimierung.injektionen(tage, test)
     j_test = optimierung.ziel(inj_test, w["s"])
-    stab = optimierung.stabilitaet(tage, train)
-    par = optimierung.pareto(tage, train, test, grund)
-    zeiten["optimierung_s"] = time.time() - t
-
-    # Beispiel für Abb. 1: GRB auf einem Testtag mit Koinzidenz am nächsten an 20
+    # Beispiel für Abb. 1: Gammablitz auf einem Testtag mit Koinzidenz am nächsten an 20
     kand = []
     for i in test:
         for x, m in zip(tage[i]["trigger"], tage[i]["trigger_max"][beste]):
             if x["typ"] == "GRB" and x["abgedeckt"] and np.isfinite(m):
                 kand.append((abs(float(m) - 20.0), x["name"]))
-    beispiel = min(kand)[1] if kand else None
+    return {"train": train, "test": test, "w": w, "beste": beste, "grund": grund, "bew": bew, "j_test": j_test,
+            "stab": optimierung.stabilitaet(tage, train), "par": optimierung.pareto(tage, train, test, grund),
+            "gewaehlt": [("beste", KONFIGS[beste], s_beste), ("grund", KONFIGS[grund], s_grund)],
+            "beispiel": min(kand)[1] if kand else None}
+
+
+def auswerten(raw: Path, aus: Path, prozesse: int = 8, max_tage: int | None = None, abbildungen: bool = True,
+              zwischen: Path | None = None) -> dict:
+    """Beide Durchgänge rechnen, dann berichten. Mit 'zwischen' wird der Zwischenstand (Tageszusammenfassungen
+    beider Durchgänge) gespeichert; 'bericht_aus_zwischenstand' schreibt Bericht und Abbildungen daraus neu."""
+    t_start = time.time()
+    raw = Path(raw)
+    zeiten: dict[str, float] = {}
 
     t = time.time()
-    gewaehlt = [("beste", KONFIGS[beste], s_beste), ("grund", KONFIGS[grund], s_grund)]
-    aufgaben2 = [(str(raw), d, tage_d[d], tag_von[d], trig, gewaehlt, beispiel) for d in daten]
+    man = einlesen.manifest(raw)
+    tage_d = einlesen.tagesdateien(man)
+    daten = sorted(tage_d)[:max_tage] if max_tage else sorted(tage_d)
+    trig = einlesen.katalog_lesen(raw, man, "fermigtrig")
+    brst = {z["trigger_name"]: z for z in einlesen.katalog_lesen(raw, man, "fermigbrst")}
+    tag_von = {d: [x for x in trig if utc_aus_met(x["met"]).strftime("%Y-%m-%d") == d] for d in daten}
+    alle_met = np.array([x["met"] for x in trig])
+    zeiten["kataloge_s"] = time.time() - t
+
+    t = time.time()
+    aufgaben = [(str(raw), d, tage_d[d], tag_von[d], alle_met, i) for i, d in enumerate(daten)]
+    tage = _parallel(suche.tag_rechnen, aufgaben, prozesse)
+    zeiten["durchgang1_s"] = time.time() - t
+
+    t = time.time()
+    opt = optimieren(tage, trig)
+    zeiten["optimierung_s"] = time.time() - t
+
+    t = time.time()
+    aufgaben2 = [(str(raw), d, tage_d[d], tag_von[d], trig, opt["gewaehlt"], opt["beispiel"]) for d in daten]
     det = _parallel(details.tag_details, aufgaben2, prozesse)
     zeiten["durchgang2_s"] = time.time() - t
 
+    stand = {"version": __version__, "manifest_sha256": hashlib.sha256((raw / "manifest.jsonl").read_bytes()).hexdigest(),
+             "man": man, "daten": daten, "trig": trig, "brst": brst, "tage": tage, "det": det,
+             "gewaehlt": [(lab, cfg, s) for lab, cfg, s in opt["gewaehlt"]], "beispiel": opt["beispiel"],
+             "prozesse": prozesse, "zeiten": zeiten}
+    if zwischen:
+        import gzip
+        import pickle
+        Path(zwischen).parent.mkdir(parents=True, exist_ok=True)
+        with gzip.open(zwischen, "wb", compresslevel=6) as f:
+            pickle.dump(stand, f, protocol=pickle.HIGHEST_PROTOCOL)
+    return berichten(stand, aus, abbildungen, opt, t_start)
+
+
+def bericht_aus_zwischenstand(zwischen: Path, aus: Path, abbildungen: bool = True) -> dict:
+    """Bericht, Listen und Abbildungen aus einem gespeicherten Zwischenstand neu schreiben (ohne neue Rechnung)."""
+    import gzip
+    import pickle
+    with gzip.open(zwischen, "rb") as f:
+        stand = pickle.load(f)
+    if stand["version"] != __version__:
+        raise RuntimeError(f"Zwischenstand von Version {stand['version']}, Programm {__version__}")
+    return berichten(stand, aus, abbildungen)
+
+
+def berichten(stand: dict, aus: Path, abbildungen: bool = True, opt: dict | None = None,
+              t_start: float | None = None) -> dict:
+    t_start = t_start or time.time()
+    aus = Path(aus)
+    aus.mkdir(parents=True, exist_ok=True)
+    zeiten = dict(stand["zeiten"])
+    tage, det, trig, brst = stand["tage"], stand["det"], stand["trig"], stand["brst"]
     t = time.time()
-    r = zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, train, test, bew, j_test, stab, par,
-                       prozesse)
-    r["rechenzeit_s"] = {k: round(v, 1) for k, v in zeiten.items()}
-    r["rechenzeit_s"]["gesamt_s"] = round(time.time() - t_start, 1)
+    if opt is None:
+        opt = optimieren(tage, trig)
+        if [(lab, cfg, s) for lab, cfg, s in opt["gewaehlt"]] != stand["gewaehlt"] or opt["beispiel"] != stand["beispiel"]:
+            raise RuntimeError("Optimierung wählt anders als im Zwischenstand: Durchgang 2 neu rechnen")
+        zeiten["optimierung_s"] = time.time() - t
+    w, beste, grund, j_test = opt["w"], opt["beste"], opt["grund"], opt["j_test"]
+    r = zusammenfassen(stand["manifest_sha256"], stand["man"], stand["daten"], trig, brst, tage, det, w, beste, grund,
+                       opt["train"], opt["test"], opt["bew"], j_test, opt["stab"], opt["par"], stand["prozesse"])
+    t = time.time()
     schreiben(aus, r, tage, det, w, j_test, trig, brst, beste, grund)
     if abbildungen:
         from . import abbildungen as abb
-        abb.alle(aus, r, tage, det, w, j_test, beste, grund, train, test)
+        abb.alle(aus, r, tage, det, w, j_test, beste, grund, opt["train"], opt["test"])
     (aus / "BERICHT.md").write_text(bericht_md(r), encoding="utf-8")
     zeiten["ausgabe_s"] = time.time() - t
-    r["rechenzeit_s"]["ausgabe_s"] = round(zeiten["ausgabe_s"], 1)
-    r["rechenzeit_s"]["gesamt_s"] = round(time.time() - t_start, 1)
+    r["rechenzeit_s"] = {k: round(v, 1) for k, v in zeiten.items()}
+    r["rechenzeit_s"]["gesamt_s"] = round(sum(zeiten.values()), 1)
     (aus / "ergebnisse.json").write_text(json.dumps(_sauber(r), ensure_ascii=False, indent=1), encoding="utf-8")
     return r
 
 
-def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, train, test, bew, j_test, stab, par,
+def zusammenfassen(man_sha, man, daten, trig, brst, tage, det, w, beste, grund, train, test, bew, j_test, stab, par,
                    prozesse) -> dict:
     # Daten und Abdeckung
     dateien = [e for e in man.values() if "/daily/" in e["pfad"] and not e["pfad"].endswith("index.html")]
@@ -151,7 +207,6 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
     genutzt = [e for e in dateien if any(f"daily/{d[:4]}/{d[5:7]}/{d[8:]}/" in e["pfad"] for d in tage_set)]
     lebenszeit = sum(t["lebenszeit_s"] for t in tage)
     gesamt = sum(t["n_zellen"] for t in tage) * DT
-    man_sha = hashlib.sha256((raw / "manifest.jsonl").read_bytes()).hexdigest()
     # Katalog im Zeitraum
     im_zeitraum = [x for t in tage for x in t["trigger"]]
     nach_typ: dict[str, dict] = {}
@@ -367,7 +422,7 @@ def schreiben(aus: Path, r, tage, det, w, j_test, trig, brst, beste, grund) -> N
 def _cfg_text(x: dict) -> str:
     unt = "zweiseitig" if x["untergrund"] == "zweiseitig" else "kausal (nur davor)"
     return (f"mindestens {x['k']} Detektor{'en' if x['k'] > 1 else ''}, Untergrund {unt} je {de(x['w_s'], 1)} s, "
-            f"Zeitskalen {x['zeitskalen']}, Band {x['band_kev']} keV")
+            f"Zeitskalen {strich(x['zeitskalen'])}, Band {strich(x['band_kev'])} keV")
 
 
 def bericht_md(r: dict) -> str:
@@ -392,7 +447,7 @@ def bericht_md(r: dict) -> str:
         typ_zeilen.append(f"| {namen.get(typ, typ)} | {x['abgedeckt']} | {x['erkannt']} ({pz(x['quote'])}) | "
                           f"{y['erkannt']} ({pz(y['quote'])}) |" if y else "")
     top = "\n".join(
-        f"| {x['rang']} | {x['k']} | {x['untergrund']} {de(x['w_s'], 1)} s | {x['zeitskalen']} | {x['band_kev']} | "
+        f"| {x['rang']} | {x['k']} | {x['untergrund']} {de(x['w_s'], 1)} s | {strich(x['zeitskalen'])} | {strich(x['band_kev'])} | "
         f"{de(x['schwelle'], 2)} | {pz(x['j_train'], 1)} | {pz(x['j_test'], 1)} |" for x in o["top10"][:5])
     zeilen_pareto = "\n".join(
         f"| {de(p['budget_je_tag'], 1)} | {de(p['schwelle'], 2)} | {pz(p['j_test'], 1)} | {de(p['grund_schwelle'], 2)}"
@@ -566,10 +621,10 @@ Schwelle (unten). *Daraus folgt: Der Ausbruch hebt sich in mehreren Detektoren z
 Koinzidenzstatistik überschreitet die Schwelle.*
 
 **Nullverteilung.** Über {de(nv['werte'] / 1e6, 1)} Mio. Werte der Referenzkombination (alle Detektoren und Tage)
-hat S den Mittelwert {de(nv['mittel'], 3)} und die Streuung {de(nv['std'], 3)}; Anteil S ≥ 3: {de(nv['anteil_ueber']['3'] * 1e3, 2)}‰ (Normalverteilung
-{de(nv['gauss_ueber']['3'] * 1e3, 2)}‰), S ≥ 4: {de(nv['anteil_ueber']['4'] * 1e5, 1)}·10⁻⁵ ({de(nv['gauss_ueber']['4'] * 1e5, 1)}·10⁻⁵),
-S ≥ 5: {de(nv['anteil_ueber']['5'] * 1e7, 1)}·10⁻⁷ ({de(nv['gauss_ueber']['5'] * 1e7, 1)}·10⁻⁷). Der Überschuss in den Ausläufern stammt aus echten Ereignissen und
-Untergrundsprüngen.
+hat S den Mittelwert {de(nv['mittel'], 3)} und die Streuung {de(nv['std'], 3)}. Anteil S ≥ 3: {wiss(nv['anteil_ueber']['3'])}
+(Normalverteilung {wiss(nv['gauss_ueber']['3'])}), S ≥ 4: {wiss(nv['anteil_ueber']['4'])} ({wiss(nv['gauss_ueber']['4'])}), S ≥ 5:
+{wiss(nv['anteil_ueber']['5'])} ({wiss(nv['gauss_ueber']['5'])}). Der Kern folgt der Normalverteilung; die Ausläufer sind breiter, vermutlich
+durch echte Ereignisse (Gammablitze, Sonneneruptionen, Teilchen) und Sprünge im Untergrund.
 
 ![Abb. 2](abbildungen/abb2_raten.png)
 
@@ -628,12 +683,7 @@ Triggerzeit die Schwelle erreicht; nur Trigger in abgedeckter Zeit (alle Tage):
 Der Beginn des passenden Ereignisses liegt im Median {de(versatz_betrag, 1)} s
 (Quartile {de(r['zeitversatz_s']['quartile'][0], 1) if r['zeitversatz_s']['quartile'] else '–'} bis
 {de(r['zeitversatz_s']['quartile'][1], 1) if r['zeitversatz_s']['quartile'] else '–'} s, negativ = davor) {versatz_wort} der
-Triggerzeit des Katalogs. {verpasst_satz}
-
-![Abb. 5](abbildungen/abb5_katalog.png)
-
-**Abb. 5:** Anteil erkannter Katalog-Trigger je Einordnung (alle Tage) mit 95-%-Intervallen. *Daraus folgt:
-{folge5}*
+Triggerzeit des Katalogs. {folge5} {verpasst_satz}
 
 **Unbestätigte Kandidaten.** Die gewählte Konfiguration meldet über alle Tage {kd['anzahl']} Ereignisse ohne
 Katalog-Trigger: {kd['nahe_datenluecke_120s']} liegen höchstens 120 s neben einer Datenlücke (Rand der
@@ -643,9 +693,9 @@ eine Einordnung nach Merkmalen, keine Bestätigung.
 
 ## 5 Prüfung des Antwortmodells
 
-![Abb. 6](abbildungen/abb6_antwort.png)
+![Abb. 5](abbildungen/abb5_antwort.png)
 
-**Abb. 6:** Gemessener Überschuss je Detektor (4,096 s um die Spitze, auf den hellsten normiert) gegen das
+**Abb. 5:** Gemessener Überschuss je Detektor (4,096 s um die Spitze, auf den hellsten normiert) gegen das
 Modell max(cos θ, 0) aus der Katalog-Richtung, für {am['grb_gemessen']} Gammablitze. *Daraus folgt: {folge6}*
 
 Korrelation zwischen gemessenem Muster und Modell: Median {de(am['korrelation_median'], 2)}

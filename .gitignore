@@ -6,3 +6,4 @@ daten/
 scratch/
 *.part
 .DS_Store
+*.pkl.gz

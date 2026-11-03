@@ -29,14 +29,25 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("--prozesse", type=int, default=8, help="parallele Prozesse (Standard 8)")
     a.add_argument("--max-tage", type=int, help="nur die ersten N Tage (zum Ausprobieren)")
     a.add_argument("--ohne-abbildungen", action="store_true")
+    a.add_argument("--zwischen", type=Path, help="Zwischenstand beider Durchgänge hier speichern (.pkl.gz)")
+
+    b = sub.add_parser("bericht", help="Bericht und Abbildungen aus einem Zwischenstand neu schreiben")
+    b.add_argument("--zwischen", type=Path, required=True)
+    b.add_argument("--aus", type=Path, required=True)
+    b.add_argument("--ohne-abbildungen", action="store_true")
 
     args = ap.parse_args(argv)
     if args.befehl == "holen":
         from .quellen import holen
         r = holen(args.daten, args.von, args.bis, args.abrufdatum, args.arbeiter)
         return 1 if r["fehler"] else 0
+    if args.befehl == "bericht":
+        from .bericht import bericht_aus_zwischenstand
+        r = bericht_aus_zwischenstand(args.zwischen, args.aus, not args.ohne_abbildungen)
+        print(f"{r['daten']['tage']} Tage, Bericht neu geschrieben: {args.aus / 'BERICHT.md'}")
+        return 0
     from .bericht import auswerten
-    r = auswerten(args.raw, args.aus, args.prozesse, args.max_tage, not args.ohne_abbildungen)
+    r = auswerten(args.raw, args.aus, args.prozesse, args.max_tage, not args.ohne_abbildungen, args.zwischen)
     print(f"{r['daten']['tage']} Tage ausgewertet, Bericht: {args.aus / 'BERICHT.md'}")
     return 0
 
