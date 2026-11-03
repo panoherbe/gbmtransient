@@ -100,6 +100,12 @@ def auswerten(raw: Path, aus: Path, prozesse: int = 8, max_tage: int | None = No
         "alle": {"beste": optimierung.bewerten(tage, alle_i, beste, s_beste, typen),
                  "grund": optimierung.bewerten(tage, alle_i, grund, s_grund, typen)},
     }
+    b = KONFIGS[beste]
+    zwilling = INDEX[Konfig(b.k, "zweiseitig" if b.modus == "kausal" else "kausal", b.w, b.zs, b.band)]
+    bew["test"]["zwilling"] = optimierung.bewerten(tage, test, zwilling, float(w["s"][zwilling]), typen)
+    bew["test"]["zwilling"]["name"] = KONFIGS[zwilling].name()
+    bew["test"]["schwelle_test_waere"] = {"beste": optimierung.schwelle_auf(tage, test, beste),
+                                          "grund": optimierung.schwelle_auf(tage, test, grund)}
     inj_test = optimierung.injektionen(tage, test)
     j_test = optimierung.ziel(inj_test, w["s"])
     stab = optimierung.stabilitaet(tage, train)
@@ -167,6 +173,15 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
         reihen.append({"rang": rang + 1, "index": int(i), **c.kurz(), "name": c.name(), "schwelle": w["s"][i],
                        "bindend": str(w["bindend"][i]), "j_train": w["j"][i], "j_test": j_test[i],
                        "unbestaetigt_train_je_tag": w["ru"][i]})
+    # Übertragung Training -> Test und Vergleich der Untergrundarten (nur zulässige Konfigurationen)
+    ok = np.isfinite(w["s"])
+    def raenge(x):
+        return np.argsort(np.argsort(x)).astype(float)
+    rk = float(np.corrcoef(raenge(w["j"][ok]), raenge(j_test[ok]))[0, 1]) if ok.sum() > 2 else None
+    modus = np.array([c.modus for c in KONFIGS])
+    untergrund = {m: {"bestes_j_test": float(np.max(j_test[ok & (modus == m)])) if np.any(ok & (modus == m)) else None,
+                      "mittel_j_test": float(np.mean(j_test[ok & (modus == m)])) if np.any(ok & (modus == m)) else None}
+                  for m in ("zweiseitig", "kausal")}
     # Ereignisse der besten Konfiguration
     ev = [e for d in det for e in d["ereignisse"]]
     split = {daten[i]: ("train" if i in set(train) else "test") for i in range(len(daten))}
@@ -207,6 +222,39 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
         if e["konfig"] == "beste":
             for k in e["katalog"]:
                 versatz.append(e["met_anfang"] - met_trig[k["name"]])
+    # Tagesdiagnose: Zufallskoinzidenzen und unbestätigte Kandidaten je Tag gegen die Sonnenaktivität im Katalog
+    tage_tab = []
+    sfl = {}
+    for x in im_zeitraum:
+        if x["typ"] == "SFLARE":
+            d = utc_aus_met(x["met"]).strftime("%Y-%m-%d")
+            sfl[d] = sfl.get(d, 0) + 1
+    for zeile in bew["alle"]["beste"]["je_tag"]:
+        tage_tab.append({**zeile, "sonneneruptionen_katalog": sfl.get(zeile["datum"], 0),
+                         "teil": split.get(zeile["datum"], "")})
+    def spearman(a, b):
+        a, b = np.asarray(a, float), np.asarray(b, float)
+        if a.size < 3 or np.std(a) == 0 or np.std(b) == 0:
+            return None
+        ra, rb = np.argsort(np.argsort(a)), np.argsort(np.argsort(b))
+        return float(np.corrcoef(ra, rb)[0, 1])
+    zz = [t["zufall"] or 0.0 for t in tage_tab]
+    tagesdiagnose = {
+        "rang_zufall_sonne": spearman(zz, [t["sonneneruptionen_katalog"] for t in tage_tab]),
+        "rang_unbestaetigt_sonne": spearman([t["unbestaetigt"] for t in tage_tab],
+                                            [t["sonneneruptionen_katalog"] for t in tage_tab]),
+        "zufall_anteil_top3_tage": float(sum(sorted(zz)[-3:]) / sum(zz)) if sum(zz) > 0 else None,
+        "top_zufall": sorted(tage_tab, key=lambda t: -(t["zufall"] or 0))[:3],
+        "top_unbestaetigt": sorted(tage_tab, key=lambda t: -t["unbestaetigt"])[:3],
+    }
+    # nicht erkannte Gammablitze (alle Tage, gewählte Konfiguration) mit T90 und Zeitskala des Bord-Triggers
+    tts = {x["trigger_name"]: x.get("trigger_timescale") for x in trig}
+    verpasst = []
+    for t in tage:
+        for x, m in zip(t["trigger"], t["trigger_max"][beste]):
+            if x["typ"] == "GRB" and x["abgedeckt"] and not m >= w["s"][beste]:
+                verpasst.append({"name": x["name"], "max": float(m) if np.isfinite(m) else None,
+                                 "t90_s": brst.get(x["name"], {}).get("t90"), "bord_zeitskala_ms": tts.get(x["name"])})
     rechner = {"python": platform.python_version(), "system": platform.platform(), "prozesse": prozesse,
                "numpy": np.__version__}
     try:
@@ -226,6 +274,10 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
                   "bytes": int(sum(e["bytes"] for e in genutzt)), "manifest_sha256": man_sha,
                   "manifest_eintraege": len(man), "lebenszeit_h": lebenszeit / 3600, "rasterzeit_h": gesamt / 3600,
                   "abdeckung": lebenszeit / gesamt if gesamt else None,
+                  "luecke_h": sum(x["luecke_s"] for x in det) / 3600,
+                  "luecke_in_saa_anteil": (sum(x.get("luecke_saa_s", 0.0) for x in det)
+                                           / max(sum(x["luecke_s"] for x in det), 1e-9)),
+                  "saa_h": sum(x.get("saa_s", 0.0) for x in det) / 3600,
                   "injektionen": int(sum(t["inj"]["met"].size for t in tage)),
                   "train_tage": len(train), "test_tage": len(test)},
         "katalog": {"trigger_im_zeitraum": len(im_zeitraum), "nach_typ": nach_typ,
@@ -233,6 +285,7 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
         "nullverteilung": {"kombination": "50-300 keV, 1,024 s, zweiseitig 32,8 s", "werte": int(tot),
                            "mittel": mittel, "std": std, "anteil_ueber": anteil, "gauss_ueber": GAUSS_UEBER},
         "optimierung": {"far_max_je_tag": optimierung.FAR_MAX, "ru_max_je_tag": optimierung.RU_MAX,
+                        "rangkorrelation_train_test": rk, "untergrund": untergrund,
                         "konfigurationen": len(KONFIGS), "beste": reihen[0], "grund": next(x for x in reihen
                                                                                             if x["index"] == grund),
                         "top10": reihen[:10], "stabilitaet": {**stab, "haeufigste": [
@@ -250,6 +303,10 @@ def zusammenfassen(raw, man, daten, trig, brst, tage, det, w, beste, grund, trai
         "beispiel": next((d["beispiel"]["name"] for d in det if d["beispiel"]), None),
         "grb_spitzenraten": {"kurz": [x["spitzenrate_cts_s"] for x in kurz],
                              "lang": [x["spitzenrate_cts_s"] for x in lang]},
+        "tagesdiagnose": tagesdiagnose, "tage": tage_tab, "grb_verpasst": verpasst,
+        "grb_ueber_90": {name: {"n": len(liste), "ueber": int(sum(1 for x in liste if x["spitzenrate_cts_s"] >=
+                                                                  bew["test"]["beste"]["injektionen"][name]["staerke90_cts_s"]))}
+                         for name, liste in (("kurz", kurz), ("lang", lang))},
     }
 
 
@@ -268,9 +325,17 @@ def schreiben(aus: Path, r, tage, det, w, j_test, trig, brst, beste, grund) -> N
             z["haerte"] = "" if e["haerte"] is None else round(e["haerte"], 3)
             wr.writerow([z.get(k, "") for k in sp])
     tr = {x["name"]: x for d in det for x in d["trigger"]}
+    tts = {x["trigger_name"]: x.get("trigger_timescale") for x in trig}
+    with (aus / "tage.csv").open("w", newline="", encoding="utf-8") as f:
+        wr = csv.writer(f)
+        wr.writerow(["datum", "teil", "zufall_je_tag_beste", "unbestaetigt_beste", "sonneneruptionen_katalog"])
+        for t in r["tage"]:
+            wr.writerow([t["datum"], t["teil"], "" if t["zufall"] is None else round(t["zufall"], 3), t["unbestaetigt"],
+                         t["sonneneruptionen_katalog"]])
     with (aus / "katalog_abgleich.csv").open("w", newline="", encoding="utf-8") as f:
         sp = ["name", "typ", "utc", "teil", "abgedeckt", "max_beste", "erkannt_beste", "max_grund", "erkannt_grund",
-              "spitzenrate_cts_s", "hellster", "korrelation", "haerte", "t90_s", "fluss_1024_ph_cm2_s"]
+              "spitzenrate_cts_s", "hellster", "korrelation", "haerte", "t90_s", "fluss_1024_ph_cm2_s",
+              "bord_zeitskala_ms"]
         wr = csv.writer(f)
         wr.writerow(sp)
         s_b, s_g = float(w["s"][beste]), float(w["s"][grund])
@@ -285,7 +350,7 @@ def schreiben(aus: Path, r, tage, det, w, j_test, trig, brst, beste, grund) -> N
                              round(d["spitzenrate_cts_s"], 1) if "spitzenrate_cts_s" in d else "",
                              d.get("hellster", ""), round(d["korrelation"], 3) if "korrelation" in d else "",
                              round(d["haerte"], 3) if d.get("haerte") is not None else "",
-                             b.get("t90", ""), b.get("flux_1024", "")])
+                             b.get("t90", ""), b.get("flux_1024", ""), tts.get(x["name"], "")])
     with (aus / "konfigurationen.csv").open("w", newline="", encoding="utf-8") as f:
         wr = csv.writer(f)
         wr.writerow(["rang", "k", "untergrund", "w_s", "zeitskalen", "band_kev", "schwelle", "bindend", "j_train",
@@ -334,6 +399,68 @@ def bericht_md(r: dict) -> str:
         f" | {pz(p['grund_j_test'], 1)} |" for p in o["pareto"])
     ik, il = bt["injektionen"]["kurz"], bt["injektionen"]["lang"]
     gk, gl = gt["injektionen"]["kurz"], gt["injektionen"]["lang"]
+    ug = o["untergrund"]
+    if best["bindend"] == "pruefaufwand":
+        folge2 = ("Zufällige Koinzidenzen sind bei der gewählten Schwelle seltener als erlaubt; die Schwelle legen die "
+                  "gleichzeitigen, nicht im Katalog geführten Ereignisse fest.")
+    else:
+        folge2 = "Die Schwelle legt die Rate zufälliger Koinzidenzen fest."
+    besser = "zweiseitige" if (ug["zweiseitig"]["bestes_j_test"] or 0) >= (ug["kausal"]["bestes_j_test"] or 0) else "kausale"
+    folge3 = (f"Die Rangfolge überträgt sich auf ungesehene Tage (Rangkorrelation {de(o['rangkorrelation_train_test'], 2)}); "
+              f"der {besser} Untergrund erreicht das höhere J (bestes J Test zweiseitig "
+              f"{pz(ug['zweiseitig']['bestes_j_test'] or 0, 1)}, kausal {pz(ug['kausal']['bestes_j_test'] or 0, 1)}).")
+    schwaecher = ik["staerke50_cts_s"] < gk["staerke50_cts_s"] and il["staerke50_cts_s"] < gl["staerke50_cts_s"]
+    u90 = r["grb_ueber_90"]
+    folge4 = ((f"Die Optimierung senkt die 50-%-Schwelle für beide Pulsklassen" if schwaecher else
+               "Die Optimierung senkt die 50-%-Schwelle nicht für beide Pulsklassen") +
+              f"; von den gemessenen Katalog-Gammablitzen liegen {u90['lang']['ueber']} von {u90['lang']['n']} "
+              f"langen und {u90['kurz']['ueber']} von {u90['kurz']['n']} kurzen über der 90-%-Schwelle ihrer Klasse.")
+    gr = ba["katalog"].get("GRB")
+    folge5 = (f"Gammablitze findet die gewählte Einstellung zu {pz(gr['quote'])}, die Grundeinstellung zu "
+              f"{pz(ga['katalog']['GRB']['quote'])}." if gr and "GRB" in ga["katalog"] else "")
+    if "TGF" in ba["katalog"]:
+        folge5 += (f" Terrestrische Gammablitze (unter 1 ms) bleiben in Zellen von 0,256 s fast unsichtbar "
+                   f"({ba['katalog']['TGF']['erkannt']} von {ba['katalog']['TGF']['abgedeckt']}).")
+    km = am["korrelation_median"] or 0
+    folge6 = ("Das einfache Modell trifft die Verteilung über die Detektoren gut" if km >= 0.8 else
+              "Das einfache Modell trifft die Verteilung über die Detektoren grob" if km >= 0.5 else
+              "Das einfache Modell trifft die Verteilung über die Detektoren schlecht") + \
+             "; die Abweichungen erklärt vermutlich die Streuung an Raumfahrzeug und Erdatmosphäre, die es nicht enthält."
+    td = r["tagesdiagnose"]
+    sw = b["test"]["schwelle_test_waere"]
+    btr = b["train"]["beste"]
+    if bt["zufall"]["je_tag"] > o["far_max_je_tag"]:
+        uebertragung = (f"Die auf den Trainingstagen gewählte Schwelle hält die Grenze für zufällige Fehlalarme auf den "
+                        f"Testtagen nicht: {de(bt['zufall']['je_tag'], 2)} statt {de(btr['zufall']['je_tag'], 2)} je Tag; "
+                        f"auf den Testtagen wäre {de(sw['beste'], 2)} σ statt {de(bt['schwelle'], 2)} σ nötig gewesen. ")
+    else:
+        uebertragung = (f"Die auf den Trainingstagen gewählte Schwelle hält die Grenze für zufällige Fehlalarme auch auf den "
+                        f"Testtagen ({de(bt['zufall']['je_tag'], 2)} je Tag). ")
+    uebertragung += (f"Die Zufallskoinzidenzen sind ungleich verteilt: Die drei stärksten Tage tragen "
+                     f"{pz(td['zufall_anteil_top3_tage'] or 0)} (höchster: {td['top_zufall'][0]['datum'][8:10]}."
+                     f"{td['top_zufall'][0]['datum'][5:7]}.{td['top_zufall'][0]['datum'][:4]}, "
+                     f"{de(td['top_zufall'][0]['zufall'], 1)} je Tag); Rangkorrelation der Tageswerte mit der Zahl der "
+                     f"Sonneneruptionen im Katalog {de(td['rang_zufall_sonne'], 2)}." +
+                     (" Eine Schwelle aus wenigen Wochen trägt diese Schwankung nicht; ein Betrieb bräuchte eine "
+                      "laufende Nachkalibrierung." if bt["zufall"]["je_tag"] > o["far_max_je_tag"] else ""))
+    zw = b["test"]["zwilling"]
+    zwilling_satz = (f"Dieselbe Konfiguration mit {'zweiseitigem' if best['untergrund'] == 'kausal' else 'kausalem'} "
+                     f"Untergrund erreicht auf den Testtagen J = {pz(zw['j'], 1)} (kurz {pz(zw['injektionen']['kurz']['quote'], 1)}, "
+                     f"lang {pz(zw['injektionen']['lang']['quote'], 1)}; gewählt: kurz {pz(ik['quote'], 1)}, lang "
+                     f"{pz(il['quote'], 1)})" + (". Vermutlich fällt beim zweiseitigen Untergrund der Ausläufer eines "
+                     f"Pulses in das hintere Untergrundfenster und hebt den geschätzten Untergrund an."
+                     if best['untergrund'] == 'kausal' and zw['j'] < bt['j'] else "."))
+    gv = r["grb_verpasst"]
+    kurz_verpasst = [x for x in gv if x["t90_s"] is not None and x["t90_s"] < 2]
+    verpasst_satz = (f"Von den {len(gv)} nicht erkannten Gammablitzen sind {len(kurz_verpasst)} kurz (T90 "
+                     f"{de(min((x['t90_s'] for x in kurz_verpasst), default=0), 2)}–"
+                     f"{de(max((x['t90_s'] for x in kurz_verpasst), default=0), 2)} s); an Bord ausgelöst auf Zeitskalen "
+                     f"von {', '.join(de(v, 0) for v in sorted({x['bord_zeitskala_ms'] for x in gv if x['bord_zeitskala_ms'] is not None}))} ms. "
+                     + ("Die kürzeste Zeitskala hier ist 256 ms; für sehr kurze, schwache Ausbrüche ist CTIME zu grob."
+                        if any(x["bord_zeitskala_ms"] is not None and x["bord_zeitskala_ms"] < 256 for x in gv) else "")
+                     ) if gv else ""
+    versatz_wort = "vor" if (r["zeitversatz_s"]["median"] or 0) < 0 else "nach"
+    versatz_betrag = abs(r["zeitversatz_s"]["median"] or 0)
     return f"""# gbmtransient – Suche nach kurzen Gamma- und Röntgentransienten in Messdaten des Fermi GBM
 
 **Technischer Bericht, Version {r['version']}** · Vorhaben des Bieters Panagiotis Herbe · Auswertung vom
@@ -359,10 +486,11 @@ Nachweiswahrscheinlichkeit bei höchstens {de(o['far_max_je_tag'], 1)} zufällig
   statt {de(gl['staerke50_cts_s'], 0)} Zählungen/s.
 - **Abgleich mit dem GBM-Triggerkatalog (alle Tage):** {quote(grb_b) if grb_b else '–'} der abgedeckten
   Gammablitze erkannt.
-- **Fehlalarme (Testtage):** zufällig {de(bt['zufall']['je_tag'], 2)} je Tag (aus {de(bt['zufall']['tage_verschoben'], 0)}
-  verschobenen Tagen), unbestätigte Kandidaten {de(bt['unbestaetigt']['je_tag'], 2)} je Tag.
-- **Statistik geprüft:** Die Signifikanz folgt auf ruhigen Daten der Standardnormalverteilung (Mittel
-  {de(nv['mittel'], 3)}, Streuung {de(nv['std'], 3)}).
+- **Fehlalarme (Testtage):** zufällig {de(bt['zufall']['je_tag'], 2)} je Tag (Trainingstage
+  {de(b['train']['beste']['zufall']['je_tag'], 2)}; {'die Grenze 0,1 hält die Schwelle nur auf den Trainingstagen ein' if bt['zufall']['je_tag'] > o['far_max_je_tag'] else 'Grenze 0,1 eingehalten'}),
+  unbestätigte Kandidaten {de(bt['unbestaetigt']['je_tag'], 2)} je Tag (Grenze {de(o['ru_max_je_tag'], 0)}).
+- **Statistik geprüft:** Die Signifikanz je Detektor hat über alle Daten Mittel {de(nv['mittel'], 3)} und
+  Streuung {de(nv['std'], 3)}, wie für die Standardnormalverteilung erwartet (Abb. 2).
 
 ## 2 Fragestellung und Daten
 
@@ -371,7 +499,9 @@ zwei BGO-Detektoren die Zählraten aus allen Richtungen, die nicht von der Erde 
 Trigger aus, wenn mindestens zwei NaI-Detektoren gleichzeitig eine Schwelle über dem Untergrund überschreiten. Die
 Frage dieses Vorhabens: Wie weit lässt sich die Empfindlichkeit einer nachträglichen Suche in den kontinuierlichen
 Daten steigern, wenn Untergrundschätzung, Zeitskalen, Energieband, Zahl der Detektoren und Schwelle gemeinsam
-optimiert werden, und wie verlässlich ist das gegen den offiziellen Triggerkatalog?
+optimiert werden, und wie verlässlich ist das gegen den offiziellen Triggerkatalog? Der Verfasser hat 2020 in
+seiner Masterarbeit mit Messdaten desselben Instruments gearbeitet (Erkennung von Röntgenausbrüchen); dieses
+Vorhaben ist davon unabhängig: eigene Fragestellung, eigener Code, Messdaten von 2025.
 
 | | |
 |---|---|
@@ -380,7 +510,7 @@ optimiert werden, und wie verlässlich ist das gegen den offiziellen Triggerkata
 | Quelle | HEASARC, NASA Goddard Space Flight Center, `https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/daily/`; GBM-Daten waren nach der Datenpolitik der Mission zu keiner Zeit proprietär; „HEASARC materials are all available freely for your use“ (HEASARC, Use of HEASARC Data) |
 | Rohablage | {de(d['manifest_eintraege'])} Dateien, jede mit URL, SHA-256 und Abrufzeit im Manifest (SHA-256 des Manifests `{d['manifest_sha256'][:16]}…`); ausgewertet wird nur aus der Ablage, jede Datei wird vor dem Lesen geprüft |
 | Zeitraum | {datetime.fromisoformat(d['von']).strftime('%d.%m.%Y')}–{datetime.fromisoformat(d['bis']).strftime('%d.%m.%Y')}; im Triggerkatalog {kat['trigger_im_zeitraum']} Bord-Trigger, davon {kat['nach_typ'].get('GRB', {}).get('gesamt', 0)} Gammablitze |
-| Abdeckung | {pz(d['abdeckung'], 1)} der Zeit mit Daten von mindestens sechs Detektoren; der Rest fällt vor allem in die Durchgänge durch die Südatlantische Anomalie (Detektoren abgeschaltet) |
+| Abdeckung | {pz(d['abdeckung'], 1)} der Zeit mit Daten von mindestens sechs Detektoren; von {de(d['luecke_h'], 0)} h ohne Daten liegen {pz(d['luecke_in_saa_anteil'])} in Durchgängen durch die Südatlantische Anomalie (Kennung der Positionsdatei; die Detektoren sind dort abgeschaltet) |
 
 ## 3 Verfahren
 
@@ -433,7 +563,7 @@ Stabilität der Wahl, Maximum-Likelihood-Anpassung einer logistischen Kurve (New
 **Abb. 1:** Zählungen je 0,256 s (50–300 keV) der drei hellsten Detektoren um den Bord-Trigger {r['beispiel']}
 (Zeit 0), mit zweiseitig geschätztem Untergrund (oben), und Koinzidenzstatistik der gewählten Konfiguration mit
 Schwelle (unten). *Daraus folgt: Der Ausbruch hebt sich in mehreren Detektoren zugleich vom Untergrund ab, die
-Statistik überschreitet die Schwelle zur Triggerzeit.*
+Koinzidenzstatistik überschreitet die Schwelle.*
 
 **Nullverteilung.** Über {de(nv['werte'] / 1e6, 1)} Mio. Werte der Referenzkombination (alle Detektoren und Tage)
 hat S den Mittelwert {de(nv['mittel'], 3)} und die Streuung {de(nv['std'], 3)}; Anteil S ≥ 3: {de(nv['anteil_ueber']['3'] * 1e3, 2)}‰ (Normalverteilung
@@ -445,8 +575,8 @@ Untergrundsprüngen.
 
 **Abb. 2:** Links: Häufigkeit der Signifikanz S auf allen Daten gegen die Standardnormalverteilung. Rechts: Rate
 der Ereignisse über einer Schwelle für die gewählte Konfiguration, unverschoben (bestätigt und unbestätigt) und
-zeitverschoben (Zufall), Trainingstage. *Daraus folgt: Zufällige Koinzidenzen sind schon bei niedrigen Schwellen
-selten; die Schwelle bestimmen die gleichzeitigen, nicht im Katalog geführten Ereignisse.*
+zeitverschoben (Zufall), Trainingstage; gepunktet: gewählte Schwelle und die beiden Grenzen. *Daraus folgt:
+{folge2}*
 
 **Optimierung.** {o['machbar']} der {o['konfigurationen']} Konfigurationen erfüllen beide Nebenbedingungen mit
 einer Schwelle unter 25 σ. Die besten fünf auf den Trainingstagen:
@@ -463,8 +593,7 @@ gewählte Konfiguration gewinnt in {pz(stab['anteil'])} der Ziehungen{'' if stab
 
 **Abb. 3:** Links: J auf Trainings- gegen Testtage für alle Konfigurationen (Farbe: k; Kreis zweiseitig, Dreieck
 kausal); gewählte Konfiguration und Grundeinstellung markiert. Rechts: J auf den Testtagen für verschiedene
-Prüfbudgets. *Daraus folgt: Die Rangfolge überträgt sich auf ungesehene Tage; der zweiseitige Untergrund ist dem
-kausalen bei gleicher Fehlalarmrate überlegen, für Echtzeit-Alarme bleibt nur der kausale.*
+Prüfbudgets. *Daraus folgt: {folge3}*
 
 | Prüfbudget je Tag | Schwelle gewählt | J Test gewählt | Schwelle Grund | J Test Grund |
 |---|---|---|---|---|
@@ -475,8 +604,7 @@ kausalen bei gleicher Fehlalarmrate überlegen, für Echtzeit-Alarme bleibt nur 
 **Abb. 4:** Nachweiswahrscheinlichkeit künstlicher Ausbrüche auf den Testtagen nach Stärke, mit 95-%-Intervallen
 und angepasster logistischer Kurve; Striche unten: gemessene Spitzenraten der abgedeckten Katalog-Gammablitze
 (kurz: T90 < 2 s).
-*Daraus folgt: Die Optimierung verschiebt die Nachweisgrenze zu schwächeren Ausbrüchen; die meisten echten
-Gammablitze liegen weit über der Grenze.*
+*Daraus folgt: {folge4}*
 
 | Testtage | gewählt | Grundeinstellung | Grund, feste Schwelle 4,5 σ |
 |---|---|---|---|
@@ -488,6 +616,8 @@ Gammablitze liegen weit über der Grenze.*
 | unbestätigte Kandidaten je Tag | {de(bt['unbestaetigt']['je_tag'], 2)} ({de(bt['unbestaetigt']['ki95_bootstrap'][0], 2)}–{de(bt['unbestaetigt']['ki95_bootstrap'][1], 2)}) | {de(gt['unbestaetigt']['je_tag'], 2)} ({de(gt['unbestaetigt']['ki95_bootstrap'][0], 2)}–{de(gt['unbestaetigt']['ki95_bootstrap'][1], 2)}) | {de(g45['unbestaetigt']['je_tag'], 1)} |
 | leere Plätze mit Treffer | {bt['nullplaetze']['treffer']} von {bt['nullplaetze']['n']} | {gt['nullplaetze']['treffer']} von {gt['nullplaetze']['n']} | {g45['nullplaetze']['treffer']} von {g45['nullplaetze']['n']} |
 
+**Übertragung auf ungesehene Tage.** {uebertragung} {zwilling_satz}
+
 **Abgleich mit dem Triggerkatalog.** Erkannt, wenn die Koinzidenzstatistik im Fenster 5 s vor bis 20 s nach der
 Triggerzeit die Schwelle erreicht; nur Trigger in abgedeckter Zeit (alle Tage):
 
@@ -495,17 +625,15 @@ Triggerzeit die Schwelle erreicht; nur Trigger in abgedeckter Zeit (alle Tage):
 |---|---|---|---|
 {chr(10).join(z for z in typ_zeilen if z)}
 
-Der Beginn des passenden Ereignisses liegt im Median {de(r['zeitversatz_s']['median'], 1)} s
+Der Beginn des passenden Ereignisses liegt im Median {de(versatz_betrag, 1)} s
 (Quartile {de(r['zeitversatz_s']['quartile'][0], 1) if r['zeitversatz_s']['quartile'] else '–'} bis
-{de(r['zeitversatz_s']['quartile'][1], 1) if r['zeitversatz_s']['quartile'] else '–'} s) vor der Triggerzeit des Katalogs.
-Terrestrische Gammablitze dauern unter einer Millisekunde und sind in Zellen von 0,256 s nicht zu sehen; das
-Ergebnis für sie ist erwartet.
+{de(r['zeitversatz_s']['quartile'][1], 1) if r['zeitversatz_s']['quartile'] else '–'} s, negativ = davor) {versatz_wort} der
+Triggerzeit des Katalogs. {verpasst_satz}
 
 ![Abb. 5](abbildungen/abb5_katalog.png)
 
 **Abb. 5:** Anteil erkannter Katalog-Trigger je Einordnung (alle Tage) mit 95-%-Intervallen. *Daraus folgt:
-Gammablitze, Sonneneruptionen und Magnetar-Ausbrüche werden von beiden Einstellungen fast vollständig gefunden; die
-Unterschiede liegen bei den schwachen Ereignissen.*
+{folge5}*
 
 **Unbestätigte Kandidaten.** Die gewählte Konfiguration meldet über alle Tage {kd['anzahl']} Ereignisse ohne
 Katalog-Trigger: {kd['nahe_datenluecke_120s']} liegen höchstens 120 s neben einer Datenlücke (Rand der
@@ -518,9 +646,7 @@ eine Einordnung nach Merkmalen, keine Bestätigung.
 ![Abb. 6](abbildungen/abb6_antwort.png)
 
 **Abb. 6:** Gemessener Überschuss je Detektor (4,096 s um die Spitze, auf den hellsten normiert) gegen das
-Modell max(cos θ, 0) aus der Katalog-Richtung, für {am['grb_gemessen']} Gammablitze. *Daraus folgt: Das einfache
-Modell trifft die Verteilung über die Detektoren im Mittel; Abweichungen kommen von Streuung an Raumfahrzeug und
-Erdatmosphäre, die es nicht enthält.*
+Modell max(cos θ, 0) aus der Katalog-Richtung, für {am['grb_gemessen']} Gammablitze. *Daraus folgt: {folge6}*
 
 Korrelation zwischen gemessenem Muster und Modell: Median {de(am['korrelation_median'], 2)}
 (Quartile {de(am['korrelation_quartile'][0], 2) if am['korrelation_quartile'] else '–'} bis

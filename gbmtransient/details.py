@@ -65,6 +65,15 @@ def tag_details(aufgabe: tuple) -> dict:
         return float(w / h) if h > 0 else None
 
     out: dict = {"datum": datum, "ereignisse": [], "trigger": [], "beispiel": None}
+    # Datenlücken (weniger als sechs Detektoren mit Daten) und wie viel davon in der SAA liegt (Positionsdatei)
+    luecke = (tag.dauer > 0).sum(axis=0) < 6
+    out["luecke_s"] = float(luecke.sum() * DT)
+    if tag.pos is not None and tag.pos["met"].size:
+        mitte = tag.t0 + DT * (np.arange(n) + 0.5)
+        i = np.clip(np.searchsorted(tag.pos["met"], mitte), 0, tag.pos["met"].size - 1)
+        saa = (tag.pos["flags"][i] & 2) > 0
+        out["luecke_saa_s"] = float((luecke & saa).sum() * DT)
+        out["saa_s"] = float(saa.sum() * DT)
     for label, cfg, s in gewaehlt:
         gl = glieder(cfg)
         stapel = np.stack([ordnungsstatistik(S[g], (cfg.k,))[cfg.k] for g in gl])

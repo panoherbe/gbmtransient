@@ -88,10 +88,15 @@ def ueberschuss(cz: np.ndarray, ce: np.ndarray, n: int, rand: int, m: int, w: in
 
 
 def ordnungsstatistik(s: np.ndarray, ks=(1, 2, 3)) -> dict[int, np.ndarray]:
-    """k-größter Wert über die Detektoren (Achse 0); NaN zählt als -inf."""
-    x = np.where(np.isnan(s), -np.inf, s)
-    x = np.sort(x, axis=0)
-    return {k: x[-k].copy() for k in ks}
+    """k-größter Wert über die Detektoren (Achse 0); NaN zählt als -inf.
+
+    Teilsortierung (np.partition) der transponierten, zusammenhängenden Matrix: dieselben Werte wie eine volle
+    Sortierung, aber schneller.
+    """
+    x = np.where(np.isnan(s), -np.inf, s).T.copy()
+    d = x.shape[1]
+    x.partition(sorted(d - k for k in ks), axis=1)
+    return {k: x[:, d - k].copy() for k in ks}
 
 
 def ereignisse(c: np.ndarray, schwelle: float, verbinden: int):

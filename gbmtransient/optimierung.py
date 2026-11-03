@@ -176,8 +176,12 @@ def bewerten(tage: list[dict], auswahl, i_cfg: int, s: float, trigger_typen: dic
             wl, wh = wilson(sum(tr), ab)
             katalog[typ] = {"abgedeckt": ab, "erkannt": int(sum(tr)), "quote": float(np.mean(tr)),
                             "ki95": [float(wl), float(wh)]}
+    zufall_tag = [float(tage[i]["hist_verschoben"][i_cfg][b:].sum() / (tage[i]["gueltig_verschoben_s"][i_cfg] / TAG_S))
+                  if tage[i]["gueltig_verschoben_s"][i_cfg] > 0 else None for i in auswahl]
     return {
         "schwelle": float(s), "tage": len(auswahl),
+        "je_tag": [{"datum": tage[i]["datum"], "zufall": z, "unbestaetigt": int(u)}
+                   for i, z, u in zip(auswahl, zufall_tag, je_tag)],
         "zufall": {"anzahl": kz, "tage_verschoben": float(zeit_z), "je_tag": float(kz / zeit_z),
                    "ki95": [float(lo / zeit_z), float(hi / zeit_z)]},
         "unbestaetigt": {"anzahl": int(je_tag.sum()), "je_tag": float(je_tag.sum() / zeit_tag.sum()),
@@ -187,6 +191,12 @@ def bewerten(tage: list[dict], auswahl, i_cfg: int, s: float, trigger_typen: dic
         "nullplaetze": {"n": int(null.sum()), "treffer": int((inj["max"][i_cfg, null] >= s).sum())},
         "katalog": katalog,
     }
+
+
+def schwelle_auf(tage: list[dict], auswahl, i_cfg: int, far_max=FAR_MAX, ru_max=RU_MAX) -> float:
+    """Schwelle, die die Nebenbedingungen auf genau diesen Tagen einhielte (nur zum Vergleich, nicht zur Wahl)."""
+    s, _ = schwellen(summieren(tage, auswahl), far_max, ru_max)
+    return float(s[i_cfg])
 
 
 def pareto(tage: list[dict], train, test, grund: int, budgets=(0.5, 1, 2, 5, 10, 20), far_max=FAR_MAX) -> list:
