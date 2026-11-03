@@ -1,0 +1,3654 @@
+{
+ "version": "0.1.0",
+ "erstellt": "2026-11-03T21:05:29Z",
+ "rechner": {
+  "python": "3.12.13",
+  "system": "Linux-7.0.0-31-generic-x86_64-with-glibc2.41",
+  "prozesse": 10,
+  "numpy": "2.5.4",
+  "astropy": "8.0.2",
+  "matplotlib": "3.11.2"
+ },
+ "daten": {
+  "von": "2025-09-01",
+  "bis": "2025-10-31",
+  "tage": 61,
+  "dateien": 793,
+  "bytes": 9260519040,
+  "manifest_sha256": "d3c31cbacb4dbd0d361329cedc0713095fae84a756dce60a2c29da4d22bcfb1e",
+  "manifest_eintraege": 856,
+  "lebenszeit_h": 1273.9164444444446,
+  "rasterzeit_h": 1463.5668622222222,
+  "abdeckung": 0.8704190271909956,
+  "luecke_h": 189.65041777777776,
+  "luecke_in_saa_anteil": 0.9968934655538387,
+  "saa_h": 190.13738666666669,
+  "injektionen": 21805,
+  "train_tage": 31,
+  "test_tage": 30
+ },
+ "katalog": {
+  "trigger_im_zeitraum": 182,
+  "nach_typ": {
+   "GRB": {
+    "gesamt": 54,
+    "abgedeckt": 54
+   },
+   "LOCLPAR": {
+    "gesamt": 31,
+    "abgedeckt": 28
+   },
+   "UNCERT": {
+    "gesamt": 15,
+    "abgedeckt": 15
+   },
+   "SFLARE": {
+    "gesamt": 46,
+    "abgedeckt": 45
+   },
+   "TGF": {
+    "gesamt": 29,
+    "abgedeckt": 29
+   },
+   "SGR": {
+    "gesamt": 3,
+    "abgedeckt": 3
+   },
+   "DISTPAR": {
+    "gesamt": 4,
+    "abgedeckt": 4
+   }
+  },
+  "burstkatalog_zeilen": 54
+ },
+ "nullverteilung": {
+  "kombination": "50-300 keV, 1,024 s, zweiseitig 32,8 s",
+  "werte": 213874307,
+  "mittel": -0.008740429255955447,
+  "std": 1.0123323650725182,
+  "anteil_ueber": {
+   "3": 0.0015914581081494749,
+   "4": 0.00015374450751580928,
+   "5": 7.745670918760709e-05
+  },
+  "gauss_ueber": {
+   "3": 0.0013499,
+   "4": 3.1671e-05,
+   "5": 2.8665e-07
+  }
+ },
+ "optimierung": {
+  "far_max_je_tag": 0.1,
+  "ru_max_je_tag": 2.0,
+  "rangkorrelation_train_test": 0.999628454657178,
+  "untergrund": {
+   "zweiseitig": {
+    "bestes_j_test": 0.5783285136441231,
+    "mittel_j_test": 0.34454379615420655
+   },
+   "kausal": {
+    "bestes_j_test": 0.6115230481609382,
+    "mittel_j_test": 0.40296479045927436
+   }
+  },
+  "konfigurationen": 162,
+  "beste": {
+   "rang": 1,
+   "index": 102,
+   "k": 2,
+   "untergrund": "kausal",
+   "w_s": 32.768,
+   "zeitskalen": "0,256-4,096 s",
+   "band_kev": "50-300",
+   "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV",
+   "schwelle": 4.68,
+   "bindend": "zufall",
+   "j_train": 0.6007106238169009,
+   "j_test": 0.6115230481609382,
+   "unbestaetigt_train_je_tag": 0.8537473818413622
+  },
+  "grund": {
+   "rang": 9,
+   "index": 93,
+   "k": 2,
+   "untergrund": "kausal",
+   "w_s": 16.384,
+   "zeitskalen": "0,256-4,096 s",
+   "band_kev": "50-300",
+   "name": "k=2, kausal 16.4 s, 0,256-4,096 s, 50-300 keV",
+   "schwelle": 5.68,
+   "bindend": "pruefaufwand",
+   "j_train": 0.5415576914018826,
+   "j_test": 0.5559804120009393,
+   "unbestaetigt_train_je_tag": 1.816908371786421
+  },
+  "top10": [
+   {
+    "rang": 1,
+    "index": 102,
+    "k": 2,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-4,096 s",
+    "band_kev": "50-300",
+    "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV",
+    "schwelle": 4.68,
+    "bindend": "zufall",
+    "j_train": 0.6007106238169009,
+    "j_test": 0.6115230481609382,
+    "unbestaetigt_train_je_tag": 0.8537473818413622
+   },
+   {
+    "rang": 2,
+    "index": 105,
+    "k": 2,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-8,192 s",
+    "band_kev": "50-300",
+    "name": "k=2, kausal 32.8 s, 0,256-8,192 s, 50-300 keV",
+    "schwelle": 4.98,
+    "bindend": "zufall",
+    "j_train": 0.596591578869385,
+    "j_test": 0.6071519466919926,
+    "unbestaetigt_train_je_tag": 1.1134457732113852
+   },
+   {
+    "rang": 3,
+    "index": 99,
+    "k": 2,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-1,024 s",
+    "band_kev": "50-300",
+    "name": "k=2, kausal 32.8 s, 0,256-1,024 s, 50-300 keV",
+    "schwelle": 4.28,
+    "bindend": "zufall",
+    "j_train": 0.5739695264830058,
+    "j_test": 0.5812552326928713,
+    "unbestaetigt_train_je_tag": 0.7053368342239
+   },
+   {
+    "rang": 4,
+    "index": 156,
+    "k": 3,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-4,096 s",
+    "band_kev": "50-300",
+    "name": "k=3, kausal 32.8 s, 0,256-4,096 s, 50-300 keV",
+    "schwelle": 3.62,
+    "bindend": "pruefaufwand",
+    "j_train": 0.569056392501158,
+    "j_test": 0.5788270702457723,
+    "unbestaetigt_train_je_tag": 1.967334601739437
+   },
+   {
+    "rang": 5,
+    "index": 90,
+    "k": 2,
+    "untergrund": "kausal",
+    "w_s": 16.384,
+    "zeitskalen": "0,256-1,024 s",
+    "band_kev": "50-300",
+    "name": "k=2, kausal 16.4 s, 0,256-1,024 s, 50-300 keV",
+    "schwelle": 4.28,
+    "bindend": "pruefaufwand",
+    "j_train": 0.5689748889732248,
+    "j_test": 0.5773630257318727,
+    "unbestaetigt_train_je_tag": 1.9283313407242813
+   },
+   {
+    "rang": 6,
+    "index": 72,
+    "k": 2,
+    "untergrund": "zweiseitig",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-1,024 s",
+    "band_kev": "50-300",
+    "name": "k=2, zweiseitig 32.8 s, 0,256-1,024 s, 50-300 keV",
+    "schwelle": 4.24,
+    "bindend": "zufall",
+    "j_train": 0.5673400040117629,
+    "j_test": 0.5783285136441231,
+    "unbestaetigt_train_je_tag": 1.4885587718838815
+   },
+   {
+    "rang": 7,
+    "index": 159,
+    "k": 3,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-8,192 s",
+    "band_kev": "50-300",
+    "name": "k=3, kausal 32.8 s, 0,256-8,192 s, 50-300 keV",
+    "schwelle": 3.94,
+    "bindend": "pruefaufwand",
+    "j_train": 0.5572809920084147,
+    "j_test": 0.5691599384937293,
+    "unbestaetigt_train_je_tag": 1.9299762816362147
+   },
+   {
+    "rang": 8,
+    "index": 75,
+    "k": 2,
+    "untergrund": "zweiseitig",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-4,096 s",
+    "band_kev": "50-300",
+    "name": "k=2, zweiseitig 32.8 s, 0,256-4,096 s, 50-300 keV",
+    "schwelle": 5.54,
+    "bindend": "pruefaufwand",
+    "j_train": 0.5533685172763947,
+    "j_test": 0.5674494328190252,
+    "unbestaetigt_train_je_tag": 1.9351221359778896
+   },
+   {
+    "rang": 9,
+    "index": 93,
+    "k": 2,
+    "untergrund": "kausal",
+    "w_s": 16.384,
+    "zeitskalen": "0,256-4,096 s",
+    "band_kev": "50-300",
+    "name": "k=2, kausal 16.4 s, 0,256-4,096 s, 50-300 keV",
+    "schwelle": 5.68,
+    "bindend": "pruefaufwand",
+    "j_train": 0.5415576914018826,
+    "j_test": 0.5559804120009393,
+    "unbestaetigt_train_je_tag": 1.816908371786421
+   },
+   {
+    "rang": 10,
+    "index": 153,
+    "k": 3,
+    "untergrund": "kausal",
+    "w_s": 32.768,
+    "zeitskalen": "0,256-1,024 s",
+    "band_kev": "50-300",
+    "name": "k=3, kausal 32.8 s, 0,256-1,024 s, 50-300 keV",
+    "schwelle": 3.5,
+    "bindend": "zufall",
+    "j_train": 0.5298132791360921,
+    "j_test": 0.5414404770151282,
+    "unbestaetigt_train_je_tag": 0.9652005334726595
+   }
+  ],
+  "stabilitaet": {
+   "ziehungen": 200,
+   "haeufigste": [
+    {
+     "konfig": 102,
+     "anteil": 0.725,
+     "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV"
+    },
+    {
+     "konfig": 105,
+     "anteil": 0.275,
+     "name": "k=2, kausal 32.8 s, 0,256-8,192 s, 50-300 keV"
+    }
+   ]
+  },
+  "pareto": [
+   {
+    "budget_je_tag": 0.5,
+    "beste": 102,
+    "schwelle": 5.78,
+    "j_train": 0.546325225627526,
+    "j_test": 0.5581555335286936,
+    "grund_schwelle": 7.54,
+    "grund_j_test": 0.48388003537247315,
+    "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV"
+   },
+   {
+    "budget_je_tag": 1,
+    "beste": 102,
+    "schwelle": 4.68,
+    "j_train": 0.6007106238169009,
+    "j_test": 0.6115230481609382,
+    "grund_schwelle": 6.18,
+    "grund_j_test": 0.5336800280787819,
+    "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV"
+   },
+   {
+    "budget_je_tag": 2,
+    "beste": 102,
+    "schwelle": 4.68,
+    "j_train": 0.6007106238169009,
+    "j_test": 0.6115230481609382,
+    "grund_schwelle": 5.68,
+    "grund_j_test": 0.5559804120009393,
+    "name": "k=2, kausal 32.8 s, 0,256-4,096 s, 50-300 keV"
+   },
+   {
+    "budget_je_tag": 5,
+    "beste": 93,
+    "schwelle": 4.42,
+    "j_train": 0.6111916505608725,
+    "j_test": 0.6188808390291981,
+    "grund_schwelle": 4.42,
+    "grund_j_test": 0.6188808390291981,
+    "name": "k=2, kausal 16.4 s, 0,256-4,096 s, 50-300 keV"
+   },
+   {
+    "budget_je_tag": 10,
+    "beste": 93,
+    "schwelle": 4.4,
+    "j_train": 0.6126123484904745,
+    "j_test": 0.6200682056612551,
+    "grund_schwelle": 4.4,
+    "grund_j_test": 0.6200682056612551,
+    "name": "k=2, kausal 16.4 s, 0,256-4,096 s, 50-300 keV"
+   },
+   {
+    "budget_je_tag": 20,
+    "beste": 93,
+    "schwelle": 4.4,
+    "j_train": 0.6126123484904745,
+    "j_test": 0.6200682056612551,
+    "grund_schwelle": 4.4,
+    "grund_j_test": 0.6200682056612551,
+    "name": "k=2, kausal 16.4 s, 0,256-4,096 s, 50-300 keV"
+   }
+  ],
+  "machbar": 108
+ },
+ "bewertung": {
+  "test": {
+   "beste": {
+    "schwelle": 4.68,
+    "tage": 30,
+    "je_tag": [
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.6999937778330861,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 1.6261631583702236,
+      "unbestaetigt": 18
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.9999881482886129,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 0.5499951111545677,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 3.9999644447604923,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.3518903025735284,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 1.0095782804563596,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.050772494095347,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.04987955012340572,
+      "unbestaetigt": 1
+     }
+    ],
+    "zufall": {
+     "anzahl": 197,
+     "tage_verschoben": 599.1242074074072,
+     "je_tag": 0.3288132870686013,
+     "ki95": [
+      0.28449800287167476,
+      0.3780747548791439
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 44,
+     "je_tag": 1.691218374216402,
+     "ki95_bootstrap": [
+      0.6526758706306696,
+      3.1681109589706495
+     ],
+     "max_an_einem_tag": 18
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5017,
+      "erkannt": 3052,
+      "quote": 0.608331672314132,
+      "ki95": [
+       0.5947468073405967,
+       0.6217507675982058
+      ],
+      "staerke50_cts_s": 87.18657974388773,
+      "staerke50_ki95": [
+       85.27069089783757,
+       89.1455153863432
+      ],
+      "staerke90_cts_s": 116.90198851956278,
+      "staerke90_ki95": [
+       113.00078356324221,
+       120.93787749869547
+      ],
+      "logistik": [
+       -33.47356575987329,
+       17.25041714701795
+      ]
+     },
+     "lang": {
+      "n": 5165,
+      "erkannt": 3175,
+      "quote": 0.6147144240077445,
+      "ki95": [
+       0.601361686007159,
+       0.6278966515578072
+      ],
+      "staerke50_cts_s": 49.84534374556991,
+      "staerke50_ki95": [
+       48.828397195517475,
+       50.88347018980406
+      ],
+      "staerke90_cts_s": 65.63197698844073,
+      "staerke90_ki95": [
+       63.52490067484546,
+       67.80894354262115
+      ],
+      "logistik": [
+       -31.216291471879025,
+       18.388218194694787
+      ]
+     }
+    },
+    "j": 0.6115230481609382,
+    "nullplaetze": {
+     "n": 529,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 1,
+      "erkannt": 1,
+      "quote": 1.0,
+      "ki95": [
+       0.2065493117918027,
+       1.0
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 31,
+      "erkannt": 28,
+      "quote": 0.9032258064516129,
+      "ki95": [
+       0.7510006140569959,
+       0.9665353560978241
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 17,
+      "erkannt": 16,
+      "quote": 0.9411764705882353,
+      "ki95": [
+       0.7301796914154303,
+       0.9895395991310502
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 24,
+      "erkannt": 11,
+      "quote": 0.4583333333333333,
+      "ki95": [
+       0.27891333613001446,
+       0.6492513477492627
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 14,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.21531080540298042
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 7,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -2.7755575615628914e-17,
+       0.35433043867586833
+      ]
+     }
+    }
+   },
+   "grund": {
+    "schwelle": 5.68,
+    "tage": 30,
+    "je_tag": [
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.34999688891654307,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 0.05081759869906949,
+      "unbestaetigt": 15
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.0999988148288613,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.2999964444865839,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 0.7499933333925923,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 1.1499897778686414,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 0.35335239815972586,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     }
+    ],
+    "zufall": {
+     "anzahl": 64,
+     "tage_verschoben": 599.1242074074072,
+     "je_tag": 0.10682259072279433,
+     "ki95": [
+      0.08226641143331316,
+      0.13641006355350044
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 66,
+     "je_tag": 2.5340976922817013,
+     "ki95_bootstrap": [
+      1.5331675488965384,
+      3.8031500436862093
+     ],
+     "max_an_einem_tag": 15
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5017,
+      "erkannt": 2823,
+      "quote": 0.5626868646601555,
+      "ki95": [
+       0.5489177012409403,
+       0.5763601043124238
+      ],
+      "staerke50_cts_s": 108.21699173137205,
+      "staerke50_ki95": [
+       106.00127373308595,
+       110.4790243264081
+      ],
+      "staerke90_cts_s": 141.2611636110427,
+      "staerke90_ki95": [
+       136.76680416653406,
+       145.90321435344734
+      ],
+      "logistik": [
+       -38.62358418502107,
+       18.986221520308202
+      ]
+     },
+     "lang": {
+      "n": 5165,
+      "erkannt": 2837,
+      "quote": 0.5492739593417232,
+      "ki95": [
+       0.5356728356822511,
+       0.562801842647342
+      ],
+      "staerke50_cts_s": 67.33017146284756,
+      "staerke50_ki95": [
+       65.99970926989917,
+       68.68745392010388
+      ],
+      "staerke90_cts_s": 86.9008467532111,
+      "staerke90_ki95": [
+       84.24342019950649,
+       89.64210081381903
+      ],
+      "logistik": [
+       -36.24972385675161,
+       19.82798989164967
+      ]
+     }
+    },
+    "j": 0.5559804120009393,
+    "nullplaetze": {
+     "n": 529,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 31,
+      "erkannt": 24,
+      "quote": 0.7741935483870968,
+      "ki95": [
+       0.6018758146999086,
+       0.8860486450053691
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 17,
+      "erkannt": 7,
+      "quote": 0.4117647058823529,
+      "ki95": [
+       0.21611056673991857,
+       0.6399455751507853
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 24,
+      "erkannt": 9,
+      "quote": 0.375,
+      "ki95": [
+       0.21159367459047676,
+       0.5729003770473553
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 14,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.21531080540298042
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 7,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -2.7755575615628914e-17,
+       0.35433043867586833
+      ]
+     }
+    }
+   },
+   "grund_4_5": {
+    "schwelle": 4.5,
+    "tage": 30,
+    "je_tag": [
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.9499915556306169,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 0.7622639804860423,
+      "unbestaetigt": 19
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.049806970319472975,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.14999866667851847,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.1999976296577226,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.5499934815587372,
+      "unbestaetigt": 8
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.0,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.0,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.14999866667851847,
+      "unbestaetigt": 7
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 1.5499862223446907,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 3.1499720002488876,
+      "unbestaetigt": 7
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.25135021612394887,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 1.8677198188442654,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.14999866667851847,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.05063613995078916,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.253862470476735,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.04994657566277257,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.19951820049362287,
+      "unbestaetigt": 8
+     }
+    ],
+    "zufall": {
+     "anzahl": 207,
+     "tage_verschoben": 599.1242074074072,
+     "je_tag": 0.3455043168690379,
+     "ki95": [
+      0.30003760583610034,
+      0.39591442427896895
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 147,
+     "je_tag": 5.644126678263789,
+     "ki95_bootstrap": [
+      4.489393803068905,
+      7.033541859922597
+     ],
+     "max_an_einem_tag": 19
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5017,
+      "erkannt": 3095,
+      "quote": 0.6169025313932629,
+      "ki95": [
+       0.6033658734638719,
+       0.6302603044599692
+      ],
+      "staerke50_cts_s": 83.62585021378737,
+      "staerke50_ki95": [
+       81.75702254309388,
+       85.53739613367968
+      ],
+      "staerke90_cts_s": 113.08070835783185,
+      "staerke90_ki95": [
+       109.24402250360988,
+       117.05213987599623
+      ],
+      "logistik": [
+       -32.231050673849886,
+       16.766566536441573
+      ]
+     },
+     "lang": {
+      "n": 5165,
+      "erkannt": 3158,
+      "quote": 0.6114230396902226,
+      "ki95": [
+       0.5980519330361941,
+       0.6246285281766969
+      ],
+      "staerke50_cts_s": 50.59114766740831,
+      "staerke50_ki95": [
+       49.51045244402372,
+       51.69543189287617
+      ],
+      "staerke90_cts_s": 68.35012197603247,
+      "staerke90_ki95": [
+       66.05849779776473,
+       70.72124450121235
+      ],
+      "logistik": [
+       -28.655273036395823,
+       16.81573928006946
+      ]
+     }
+    },
+    "j": 0.6141627855417428,
+    "nullplaetze": {
+     "n": 529,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 1,
+      "erkannt": 1,
+      "quote": 1.0,
+      "ki95": [
+       0.2065493117918027,
+       1.0
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 31,
+      "erkannt": 28,
+      "quote": 0.9032258064516129,
+      "ki95": [
+       0.7510006140569959,
+       0.9665353560978241
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 17,
+      "erkannt": 16,
+      "quote": 0.9411764705882353,
+      "ki95": [
+       0.7301796914154303,
+       0.9895395991310502
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 24,
+      "erkannt": 10,
+      "quote": 0.4166666666666667,
+      "ki95": [
+       0.24467602500194355,
+       0.6116533427566112
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 14,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.21531080540298042
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 7,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -2.7755575615628914e-17,
+       0.35433043867586833
+      ]
+     }
+    }
+   },
+   "zwilling": {
+    "schwelle": 5.54,
+    "tage": 30,
+    "je_tag": [
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.34999688891654307,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 0.05081759869906949,
+      "unbestaetigt": 17
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.7499911112164598,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 0.24999777779753077,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 2.1999804446182707,
+      "unbestaetigt": 7
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 0.35335239815972586,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.04987955012340572,
+      "unbestaetigt": 4
+     }
+    ],
+    "zufall": {
+     "anzahl": 85,
+     "tage_verschoben": 599.1242074074072,
+     "je_tag": 0.14187375330371121,
+     "ki95": [
+      0.11332371512510865,
+      0.17542909303183582
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 77,
+     "je_tag": 2.9671776206472398,
+     "ki95_bootstrap": [
+      1.8452493709917255,
+      4.396043380879797
+     ],
+     "max_an_einem_tag": 17
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5017,
+      "erkannt": 2873,
+      "quote": 0.5726529798684473,
+      "ki95": [
+       0.5589138194763323,
+       0.5862809662921931
+      ],
+      "staerke50_cts_s": 103.34413198880515,
+      "staerke50_ki95": [
+       101.2199583487041,
+       105.51288294080112
+      ],
+      "staerke90_cts_s": 134.82882153548908,
+      "staerke90_ki95": [
+       130.55359487899003,
+       139.24404864912898
+      ],
+      "logistik": [
+       -38.319969386362715,
+       19.024097260822906
+      ]
+     },
+     "lang": {
+      "n": 5165,
+      "erkannt": 2904,
+      "quote": 0.5622458857696031,
+      "ki95": [
+       0.548674780107025,
+       0.5757244697278047
+      ],
+      "staerke50_cts_s": 63.41269292523791,
+      "staerke50_ki95": [
+       62.12898623590721,
+       64.72292351209327
+      ],
+      "staerke90_cts_s": 82.86597802924403,
+      "staerke90_ki95": [
+       80.26185032794227,
+       85.55459769100993
+      ],
+      "logistik": [
+       -34.07731200294448,
+       18.90897908149134
+      ]
+     }
+    },
+    "j": 0.5674494328190252,
+    "nullplaetze": {
+     "n": 529,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 31,
+      "erkannt": 25,
+      "quote": 0.8064516129032258,
+      "ki95": [
+       0.6371974203979117,
+       0.9081299169197515
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 17,
+      "erkannt": 3,
+      "quote": 0.17647058823529413,
+      "ki95": [
+       0.06191126589146398,
+       0.4102945877077837
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 24,
+      "erkannt": 7,
+      "quote": 0.2916666666666667,
+      "ki95": [
+       0.14914648116318613,
+       0.4916769382332005
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 1,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.7934506882081973
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 14,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.21531080540298042
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 7,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -2.7755575615628914e-17,
+       0.35433043867586833
+      ]
+     }
+    },
+    "name": "k=2, zweiseitig 32.8 s, 0,256-4,096 s, 50-300 keV",
+    "bindend": "pruefaufwand"
+   },
+   "schwelle_test_waere": {
+    "beste": 7.36,
+    "grund": 6.0
+   }
+  },
+  "train": {
+   "beste": {
+    "schwelle": 4.68,
+    "tage": 31,
+    "je_tag": [
+     {
+      "datum": "2025-09-01",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-03",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-05",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-09",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-13",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-15",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-17",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-19",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-23",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-25",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-27",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-29",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-01",
+      "zufall": 1.4499828150184888,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-03",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-05",
+      "zufall": 0.24999777779753077,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-09",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-13",
+      "zufall": 0.6559099919571608,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-15",
+      "zufall": 0.5499934815587372,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-17",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-19",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-23",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-25",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-27",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-29",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-31",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     }
+    ],
+    "zufall": {
+     "anzahl": 61,
+     "tage_verschoben": 620.518459259259,
+     "je_tag": 0.09830489180421557,
+     "ki95": [
+      0.07519545287449339,
+      0.12627674607516823
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 23,
+     "je_tag": 0.8537473818413625,
+     "ki95_bootstrap": [
+      0.4084932654416419,
+      1.3760624520415872
+     ],
+     "max_an_einem_tag": 6
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5221,
+      "erkannt": 3122,
+      "quote": 0.5979697375981613,
+      "ki95": [
+       0.5846027519090888,
+       0.6111926627558066
+      ],
+      "staerke50_cts_s": 87.45659820956509,
+      "staerke50_ki95": [
+       85.54811014429634,
+       89.40766262969578
+      ],
+      "staerke90_cts_s": 118.15013353390322,
+      "staerke90_ki95": [
+       114.11038590757259,
+       122.33289672147873
+      ],
+      "logistik": [
+       -32.65845795374689,
+       16.81871600475943
+      ]
+     },
+     "lang": {
+      "n": 5331,
+      "erkannt": 3217,
+      "quote": 0.6034515100356406,
+      "ki95": [
+       0.5902500726435681,
+       0.6165039627858738
+      ],
+      "staerke50_cts_s": 50.26768557911311,
+      "staerke50_ki95": [
+       49.1952216659778,
+       51.36352938171792
+      ],
+      "staerke90_cts_s": 68.56937247133916,
+      "staerke90_ki95": [
+       66.2823063885262,
+       70.93535360029573
+      ],
+      "logistik": [
+       -27.722323783118664,
+       16.29489497469772
+      ]
+     }
+    },
+    "j": 0.6007106238169009,
+    "nullplaetze": {
+     "n": 542,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 3,
+      "erkannt": 2,
+      "quote": 0.6666666666666666,
+      "ki95": [
+       0.2076595988078242,
+       0.9385080559790691
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 23,
+      "erkannt": 21,
+      "quote": 0.9130434782608695,
+      "ki95": [
+       0.7320401874258483,
+       0.9758199957343082
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 11,
+      "erkannt": 11,
+      "quote": 1.0,
+      "ki95": [
+       0.7411670300055737,
+       1.0
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 21,
+      "erkannt": 10,
+      "quote": 0.47619047619047616,
+      "ki95": [
+       0.28344005975415376,
+       0.6763046555309483
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 2,
+      "erkannt": 1,
+      "quote": 0.5,
+      "ki95": [
+       0.09453120463920084,
+       0.9054687953607992
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 15,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.20388330359648707
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 8,
+      "erkannt": 1,
+      "quote": 0.125,
+      "ki95": [
+       0.022417491199971912,
+       0.47088818505608376
+      ]
+     }
+    }
+   },
+   "grund": {
+    "schwelle": 5.68,
+    "tage": 31,
+    "je_tag": [
+     {
+      "datum": "2025-09-01",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-03",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-05",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-09",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-13",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-15",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-17",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-19",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-23",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-25",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-27",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-29",
+      "zufall": 0.0,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-01",
+      "zufall": 0.14999822224329196,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-03",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-05",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-09",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-11",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-13",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-15",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-17",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-19",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-21",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-23",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-25",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-27",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-29",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-31",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     }
+    ],
+    "zufall": {
+     "anzahl": 4,
+     "tage_verschoben": 620.518459259259,
+     "je_tag": 0.006446222413391185,
+     "ki95": [
+      0.001756378649762243,
+      0.016504889617030158
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 49,
+     "je_tag": 1.8169083717864207,
+     "ki95_bootstrap": [
+      1.2580787198319285,
+      2.4110853867017217
+     ],
+     "max_an_einem_tag": 6
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 5221,
+      "erkannt": 2852,
+      "quote": 0.5462555066079295,
+      "ki95": [
+       0.5327220345922963,
+       0.5597209617744139
+      ],
+      "staerke50_cts_s": 112.52296734248357,
+      "staerke50_ki95": [
+       110.19487540358922,
+       114.90024498131262
+      ],
+      "staerke90_cts_s": 146.84214281853042,
+      "staerke90_ki95": [
+       142.18952206530062,
+       151.6470031992585
+      ],
+      "logistik": [
+       -38.98499764753858,
+       19.005565067465028
+      ]
+     },
+     "lang": {
+      "n": 5331,
+      "erkannt": 2862,
+      "quote": 0.5368598761958356,
+      "ki95": [
+       0.523452756717414,
+       0.5502139122977906
+      ],
+      "staerke50_cts_s": 68.128510084392,
+      "staerke50_ki95": [
+       66.73416688890262,
+       69.55198667642237
+      ],
+      "staerke90_cts_s": 90.45642895882212,
+      "staerke90_ki95": [
+       87.55658618856798,
+       93.45231348285232
+      ],
+      "logistik": [
+       -32.720472674676664,
+       17.8475737924868
+      ]
+     }
+    },
+    "j": 0.5415576914018826,
+    "nullplaetze": {
+     "n": 542,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 3,
+      "erkannt": 2,
+      "quote": 0.6666666666666666,
+      "ki95": [
+       0.2076595988078242,
+       0.9385080559790691
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 23,
+      "erkannt": 17,
+      "quote": 0.7391304347826086,
+      "ki95": [
+       0.5352999499700668,
+       0.8745138402805501
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 11,
+      "erkannt": 3,
+      "quote": 0.2727272727272727,
+      "ki95": [
+       0.09746059213308628,
+       0.5656453033189257
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 21,
+      "erkannt": 6,
+      "quote": 0.2857142857142857,
+      "ki95": [
+       0.1381386287176154,
+       0.4995638088483033
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 2,
+      "erkannt": 1,
+      "quote": 0.5,
+      "ki95": [
+       0.09453120463920084,
+       0.9054687953607992
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 15,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       0.0,
+       0.20388330359648707
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 8,
+      "erkannt": 1,
+      "quote": 0.125,
+      "ki95": [
+       0.022417491199971912,
+       0.47088818505608376
+      ]
+     }
+    }
+   }
+  },
+  "alle": {
+   "beste": {
+    "schwelle": 4.68,
+    "tage": 61,
+    "je_tag": [
+     {
+      "datum": "2025-09-01",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.6999937778330861,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-03",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 1.6261631583702236,
+      "unbestaetigt": 18
+     },
+     {
+      "datum": "2025-09-05",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-09",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-13",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-15",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-17",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-19",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.9999881482886129,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-09-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-23",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-25",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-27",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-29",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 0.5499951111545677,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-01",
+      "zufall": 1.4499828150184888,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 3.9999644447604923,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-03",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.04999940741443065,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-05",
+      "zufall": 0.24999777779753077,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-09",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.3518903025735284,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-13",
+      "zufall": 0.6559099919571608,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 1.0095782804563596,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-15",
+      "zufall": 0.5499934815587372,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-17",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-19",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.050772494095347,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-23",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-25",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-27",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-29",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.04987955012340572,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-31",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     }
+    ],
+    "zufall": {
+     "anzahl": 258,
+     "tage_verschoben": 1219.6426666666666,
+     "je_tag": 0.21153736832208778,
+     "ki95": [
+      0.1865102863430855,
+      0.2389870868608727
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 67,
+     "je_tag": 1.2651821862348178,
+     "ki95_bootstrap": [
+      0.6792650135328625,
+      2.059508472350103
+     ],
+     "max_an_einem_tag": 18
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 10238,
+      "erkannt": 6174,
+      "quote": 0.6030474702090252,
+      "ki95": [
+       0.5935331978442749,
+       0.6124844415100518
+      ],
+      "staerke50_cts_s": 87.31879829666221,
+      "staerke50_ki95": [
+       85.96300643898186,
+       88.69597344045013
+      ],
+      "staerke90_cts_s": 117.51916608222214,
+      "staerke90_ki95": [
+       114.69795594274142,
+       120.4097691466743
+      ],
+      "logistik": [
+       -33.0621567417903,
+       17.032623118550738
+      ]
+     },
+     "lang": {
+      "n": 10496,
+      "erkannt": 6392,
+      "quote": 0.6089939024390244,
+      "ki95": [
+       0.5996202167497254,
+       0.6182878353823088
+      ],
+      "staerke50_cts_s": 50.06014740124961,
+      "staerke50_ki95": [
+       49.31719257386529,
+       50.81429471236477
+      ],
+      "staerke90_cts_s": 67.1567615220183,
+      "staerke90_ki95": [
+       65.59249134355981,
+       68.75833690326895
+      ],
+      "logistik": [
+       -29.265168363889615,
+       17.219949389470735
+      ]
+     }
+    },
+    "j": 0.6060206863240247,
+    "nullplaetze": {
+     "n": 1071,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 4,
+      "erkannt": 3,
+      "quote": 0.75,
+      "ki95": [
+       0.3006418400969081,
+       0.954412739704631
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 54,
+      "erkannt": 49,
+      "quote": 0.9074074074074074,
+      "ki95": [
+       0.8009011730389517,
+       0.9597988654973886
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 28,
+      "erkannt": 27,
+      "quote": 0.9642857142857143,
+      "ki95": [
+       0.8228780209422653,
+       0.9936674802210836
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 45,
+      "erkannt": 21,
+      "quote": 0.4666666666666667,
+      "ki95": [
+       0.32935131967087283,
+       0.6092254536541993
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 3,
+      "erkannt": 1,
+      "quote": 0.3333333333333333,
+      "ki95": [
+       0.06149194402093078,
+       0.7923404011921757
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 29,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.11696980012918376
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 15,
+      "erkannt": 1,
+      "quote": 0.06666666666666667,
+      "ki95": [
+       0.01186689536153232,
+       0.2981653010887565
+      ]
+     }
+    }
+   },
+   "grund": {
+    "schwelle": 5.68,
+    "tage": 61,
+    "je_tag": [
+     {
+      "datum": "2025-09-01",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-02",
+      "zufall": 0.34999688891654307,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-09-03",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-04",
+      "zufall": 0.05081759869906949,
+      "unbestaetigt": 15
+     },
+     {
+      "datum": "2025-09-05",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-06",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-08",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-09",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-10",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-11",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-12",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-13",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-14",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-15",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-16",
+      "zufall": 0.0999988148288613,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-17",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-09-18",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-19",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-20",
+      "zufall": 0.2999964444865839,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-21",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-09-22",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-23",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-24",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-25",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-26",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-27",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-09-28",
+      "zufall": 0.0999991111190123,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-09-29",
+      "zufall": 0.0,
+      "unbestaetigt": 6
+     },
+     {
+      "datum": "2025-09-30",
+      "zufall": 0.7499933333925923,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-01",
+      "zufall": 0.14999822224329196,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-02",
+      "zufall": 1.1499897778686414,
+      "unbestaetigt": 5
+     },
+     {
+      "datum": "2025-10-03",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-04",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-05",
+      "zufall": 0.04999955555950615,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-06",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-07",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-08",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-09",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-10",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-11",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-12",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-13",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-14",
+      "zufall": 0.35335239815972586,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-15",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-16",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-17",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-18",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-19",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-20",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-21",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-22",
+      "zufall": 0.0,
+      "unbestaetigt": 4
+     },
+     {
+      "datum": "2025-10-23",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-24",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-25",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-26",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-27",
+      "zufall": 0.0,
+      "unbestaetigt": 3
+     },
+     {
+      "datum": "2025-10-28",
+      "zufall": 0.0,
+      "unbestaetigt": 1
+     },
+     {
+      "datum": "2025-10-29",
+      "zufall": 0.0,
+      "unbestaetigt": 0
+     },
+     {
+      "datum": "2025-10-30",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     },
+     {
+      "datum": "2025-10-31",
+      "zufall": 0.0,
+      "unbestaetigt": 2
+     }
+    ],
+    "zufall": {
+     "anzahl": 68,
+     "tage_verschoben": 1219.6426666666666,
+     "je_tag": 0.055754035061635544,
+     "ki95": [
+      0.04329518980911072,
+      0.07068152460723161
+     ]
+    },
+    "unbestaetigt": {
+     "anzahl": 115,
+     "je_tag": 2.169252135759721,
+     "ki95_bootstrap": [
+      1.6188947049361846,
+      2.870156749741043
+     ],
+     "max_an_einem_tag": 15
+    },
+    "injektionen": {
+     "kurz": {
+      "n": 10238,
+      "erkannt": 5675,
+      "quote": 0.5543074819300645,
+      "ki95": [
+       0.5446609523618905,
+       0.563913272738589
+      ],
+      "staerke50_cts_s": 110.3206669801467,
+      "staerke50_ki95": [
+       108.7089764323837,
+       111.95625202592629
+      ],
+      "staerke90_cts_s": 144.10525358346771,
+      "staerke90_ki95": [
+       140.84463468394873,
+       147.44135732933358
+      ],
+      "logistik": [
+       -38.68352314753442,
+       18.93784685432397
+      ]
+     },
+     "lang": {
+      "n": 10496,
+      "erkannt": 5699,
+      "quote": 0.54296875,
+      "ki95": [
+       0.5334246799682625,
+       0.552481379045328
+      ],
+      "staerke50_cts_s": 67.72768493963018,
+      "staerke50_ki95": [
+       66.7604689449886,
+       68.7089138193679
+      ],
+      "staerke90_cts_s": 88.71072408432882,
+      "staerke90_ki95": [
+       86.7334194175053,
+       90.7331063437539
+      ],
+      "logistik": [
+       -34.31966744578599,
+       18.74606755762074
+      ]
+     }
+    },
+    "j": 0.5486381159650322,
+    "nullplaetze": {
+     "n": 1071,
+     "treffer": 0
+    },
+    "katalog": {
+     "DISTPAR": {
+      "abgedeckt": 4,
+      "erkannt": 2,
+      "quote": 0.5,
+      "ki95": [
+       0.15003898774401986,
+       0.8499610122559802
+      ]
+     },
+     "GRB": {
+      "abgedeckt": 54,
+      "erkannt": 41,
+      "quote": 0.7592592592592593,
+      "ki95": [
+       0.6305247570705963,
+       0.8535570856343475
+      ]
+     },
+     "LOCLPAR": {
+      "abgedeckt": 28,
+      "erkannt": 10,
+      "quote": 0.35714285714285715,
+      "ki95": [
+       0.20705829414358318,
+       0.5416969362676942
+      ]
+     },
+     "SFLARE": {
+      "abgedeckt": 45,
+      "erkannt": 15,
+      "quote": 0.3333333333333333,
+      "ki95": [
+       0.21358874855892565,
+       0.4792951180664363
+      ]
+     },
+     "SGR": {
+      "abgedeckt": 3,
+      "erkannt": 1,
+      "quote": 0.3333333333333333,
+      "ki95": [
+       0.06149194402093078,
+       0.7923404011921757
+      ]
+     },
+     "TGF": {
+      "abgedeckt": 29,
+      "erkannt": 0,
+      "quote": 0.0,
+      "ki95": [
+       -1.3877787807814457e-17,
+       0.11696980012918376
+      ]
+     },
+     "UNCERT": {
+      "abgedeckt": 15,
+      "erkannt": 1,
+      "quote": 0.06666666666666667,
+      "ki95": [
+       0.01186689536153232,
+       0.2981653010887565
+      ]
+     }
+    }
+   }
+  }
+ },
+ "kandidaten": {
+  "anzahl": 80,
+  "nahe_datenluecke_120s": 21,
+  "weich_sonne_sichtbar": 25,
+  "uebrige": 34,
+  "band_27_50": 0,
+  "dauer_median_s": 6.145,
+  "breite_betrag_median": 23.490000000000002
+ },
+ "antwortmodell": {
+  "grb_gemessen": 54,
+  "korrelation_median": 0.9160772050890037,
+  "korrelation_quartile": [
+   0.7914409789778594,
+   0.9588977254877415
+  ],
+  "hellster_in_top2": 47,
+  "hellster_in_top2_von": 54,
+  "haerte_kurz_median": 0.2678227524137417,
+  "haerte_kurz_n": 10,
+  "haerte_lang_median": 0.40833964653013854,
+  "haerte_lang_n": 44,
+  "spitzenrate_kurz_median": 88.18846620950093,
+  "spitzenrate_lang_median": 226.72645065907784
+ },
+ "zeitversatz_s": {
+  "n": 106,
+  "median": 0.051392555236816406,
+  "quartile": [
+   -2.2449218034744263,
+   0.4293844997882843
+  ]
+ },
+ "ereignisse": {
+  "beste": 186,
+  "grund": 204
+ },
+ "beispiel": "bn251022940",
+ "grb_spitzenraten": {
+  "kurz": [
+   68.88862246286632,
+   190.54676211279633,
+   94.56550918696327,
+   81.81142323203859,
+   115.09771260686324,
+   61.88386821705858,
+   60.99323016761939,
+   141.24783041296385,
+   634.395114043555,
+   78.58438437320912
+  ],
+  "lang": [
+   2316.921403002648,
+   840.5290265516915,
+   99.16967906788771,
+   178.2562858594664,
+   401.6743194475956,
+   73.05729146763028,
+   258.4142340831488,
+   69.98260073527982,
+   177.65574518819295,
+   6874.544773934211,
+   6555.425121128696,
+   429.9572760456979,
+   1491.4662956720713,
+   108.02753789751904,
+   1083.1885651765376,
+   155.74718812156507,
+   83.08976730231608,
+   285.0087376926983,
+   1135.8863807543794,
+   102.51986997686078,
+   424.4016480202657,
+   74.20621609593292,
+   120.0310971635871,
+   180.4532384971184,
+   232.5902283848892,
+   1620.2362714487954,
+   195.93426353153765,
+   462.0920601701693,
+   104.49197652686865,
+   383.4651572488601,
+   801.7367849197817,
+   139.82937631293026,
+   196.39985051357786,
+   99.24295651917929,
+   106.93230883374612,
+   2181.780183494892,
+   103.70566550733253,
+   706.3380225081692,
+   163.46870853211402,
+   265.64339951737264,
+   91.01973317341955,
+   545.9143127577714,
+   306.5334836793314,
+   220.86267293326648
+  ]
+ },
+ "tagesdiagnose": {
+  "rang_zufall_sonne": 0.5221047065044949,
+  "rang_unbestaetigt_sonne": 0.438339502908514,
+  "zufall_anteil_top3_tage": 0.5466667470866489,
+  "top_zufall": [
+   {
+    "datum": "2025-10-02",
+    "zufall": 3.9999644447604923,
+    "unbestaetigt": 1,
+    "sonneneruptionen_katalog": 1,
+    "teil": "test"
+   },
+   {
+    "datum": "2025-09-04",
+    "zufall": 1.6261631583702236,
+    "unbestaetigt": 18,
+    "sonneneruptionen_katalog": 1,
+    "teil": "test"
+   },
+   {
+    "datum": "2025-10-01",
+    "zufall": 1.4499828150184888,
+    "unbestaetigt": 6,
+    "sonneneruptionen_katalog": 0,
+    "teil": "train"
+   }
+  ],
+  "top_unbestaetigt": [
+   {
+    "datum": "2025-09-04",
+    "zufall": 1.6261631583702236,
+    "unbestaetigt": 18,
+    "sonneneruptionen_katalog": 1,
+    "teil": "test"
+   },
+   {
+    "datum": "2025-10-01",
+    "zufall": 1.4499828150184888,
+    "unbestaetigt": 6,
+    "sonneneruptionen_katalog": 0,
+    "teil": "train"
+   },
+   {
+    "datum": "2025-09-20",
+    "zufall": 0.9999881482886129,
+    "unbestaetigt": 5,
+    "sonneneruptionen_katalog": 0,
+    "teil": "test"
+   }
+  ]
+ },
+ "tage": [
+  {
+   "datum": "2025-09-01",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-02",
+   "zufall": 0.6999937778330861,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 2,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-03",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-04",
+   "zufall": 1.6261631583702236,
+   "unbestaetigt": 18,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-05",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 1,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-06",
+   "zufall": 0.04999940741443065,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-07",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-08",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-09",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-10",
+   "zufall": 0.0999991111190123,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-11",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-12",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-13",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-14",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-15",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 2,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-16",
+   "zufall": 0.04999940741443065,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-17",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-18",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-19",
+   "zufall": 0.04999955555950615,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-20",
+   "zufall": 0.9999881482886129,
+   "unbestaetigt": 5,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-21",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-22",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-23",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 1,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-24",
+   "zufall": 0.04999955555950615,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-25",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-26",
+   "zufall": 0.04999955555950615,
+   "unbestaetigt": 3,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-27",
+   "zufall": 0.0,
+   "unbestaetigt": 3,
+   "sonneneruptionen_katalog": 1,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-28",
+   "zufall": 0.0999991111190123,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 6,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-09-29",
+   "zufall": 0.04999940741443065,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 5,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-09-30",
+   "zufall": 0.5499951111545677,
+   "unbestaetigt": 3,
+   "sonneneruptionen_katalog": 3,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-01",
+   "zufall": 1.4499828150184888,
+   "unbestaetigt": 6,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-02",
+   "zufall": 3.9999644447604923,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-03",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 2,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-04",
+   "zufall": 0.04999940741443065,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-05",
+   "zufall": 0.24999777779753077,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-06",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-07",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 1,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-08",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-09",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-10",
+   "zufall": 0.3518903025735284,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-11",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-12",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-13",
+   "zufall": 0.6559099919571608,
+   "unbestaetigt": 3,
+   "sonneneruptionen_katalog": 3,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-14",
+   "zufall": 1.0095782804563596,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 2,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-15",
+   "zufall": 0.5499934815587372,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 2,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-16",
+   "zufall": 0.0999991111190123,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 5,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-17",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 4,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-18",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 1,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-19",
+   "zufall": 0.04999955555950615,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-20",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-21",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-22",
+   "zufall": 0.050772494095347,
+   "unbestaetigt": 2,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-23",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-24",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-25",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-26",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-27",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-28",
+   "zufall": 0.0,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-29",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  },
+  {
+   "datum": "2025-10-30",
+   "zufall": 0.04987955012340572,
+   "unbestaetigt": 1,
+   "sonneneruptionen_katalog": 0,
+   "teil": "test"
+  },
+  {
+   "datum": "2025-10-31",
+   "zufall": 0.0,
+   "unbestaetigt": 0,
+   "sonneneruptionen_katalog": 0,
+   "teil": "train"
+  }
+ ],
+ "grb_verpasst": [
+  {
+   "name": "bn250917093",
+   "max": 3.0838425159454346,
+   "t90_s": 0.48,
+   "bord_zeitskala_ms": 32
+  },
+  {
+   "name": "bn251009666",
+   "max": 4.047281742095947,
+   "t90_s": 0.32,
+   "bord_zeitskala_ms": 256
+  },
+  {
+   "name": "bn251012616",
+   "max": 3.739563465118408,
+   "t90_s": 0.576,
+   "bord_zeitskala_ms": 128
+  },
+  {
+   "name": "bn251018723",
+   "max": 3.8651680946350098,
+   "t90_s": 0.32,
+   "bord_zeitskala_ms": 64
+  },
+  {
+   "name": "bn251026305",
+   "max": 4.487884998321533,
+   "t90_s": 6.016,
+   "bord_zeitskala_ms": 1024
+  }
+ ],
+ "grb_ueber_90": {
+  "kurz": {
+   "n": 10,
+   "ueber": 3
+  },
+  "lang": {
+   "n": 44,
+   "ueber": 44
+  }
+ },
+ "rechenzeit_s": {
+  "kataloge_s": 0.8,
+  "durchgang1_s": 4855.5,
+  "optimierung_s": 5.0,
+  "durchgang2_s": 285.9,
+  "ausgabe_s": 1.3,
+  "gesamt_s": 5148.5
+ }
+}

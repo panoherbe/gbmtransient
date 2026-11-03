@@ -27,10 +27,10 @@ def einbetten(md: str, basis: Path) -> str:
 
 def nach_html(md: str) -> str:
     import markdown
-    body = markdown.markdown(md, extensions=["tables", "attr_list", "sane_lists"])
+    body = markdown.markdown(md, extensions=["tables", "attr_list", "sane_lists", "fenced_code"])
     body = re.sub(r"<table>\s*<thead>\s*<tr>(\s*<th[^>]*>\s*</th>)+\s*</tr>\s*</thead>", '<table class="kv">', body)
     body = re.sub(r"(\d) (%|σ|s\b|h\b|GB|keV)", "\\1&nbsp;\\2", body)
-    return body.replace('<div class="pagebreak"></div>', '<div class="pagebreak"></div>')
+    return body
 
 
 def seite(body: str, titel: str, kopf: str, fuss: str) -> str:

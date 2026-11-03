@@ -1,0 +1,32 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.2.0, pluggy-1.7.0 -- /usr/local/bin/python
+rootdir: /app
+configfile: pyproject.toml
+collecting ... collected 24 items
+
+tests/test_gbmtransient.py::test_met_grb170817a PASSED                   [  4%]
+tests/test_gbmtransient.py::test_met_tagesbeginn_2025 PASSED             [  8%]
+tests/test_gbmtransient.py::test_li_ma_gleich_likelihood_quotient[120-400-0.25] PASSED [ 12%]
+tests/test_gbmtransient.py::test_li_ma_gleich_likelihood_quotient[80-400-0.25] PASSED [ 16%]
+tests/test_gbmtransient.py::test_li_ma_gleich_likelihood_quotient[15-1000-0.01] PASSED [ 20%]
+tests/test_gbmtransient.py::test_li_ma_gleich_likelihood_quotient[0-50-0.2] PASSED [ 25%]
+tests/test_gbmtransient.py::test_li_ma_gleich_likelihood_quotient[300-2600-0.125] PASSED [ 29%]
+tests/test_gbmtransient.py::test_li_ma_nullverteilung PASSED             [ 33%]
+tests/test_gbmtransient.py::test_signifikanz_ruhig_und_luecke PASSED     [ 37%]
+tests/test_gbmtransient.py::test_linearer_untergrund_zweiseitig_ohne_verzerrung_kausal_mit PASSED [ 41%]
+tests/test_gbmtransient.py::test_ordnungsstatistik PASSED                [ 45%]
+tests/test_gbmtransient.py::test_ereignisse_verbinden_und_spitze PASSED  [ 50%]
+tests/test_gbmtransient.py::test_intervalle PASSED                       [ 54%]
+tests/test_gbmtransient.py::test_logistik_findet_parameter PASSED        [ 58%]
+tests/test_gbmtransient.py::test_auf_raster_erhaelt_zaehlungen_und_messzeit PASSED [ 62%]
+tests/test_gbmtransient.py::test_antwort_und_puls PASSED                 [ 66%]
+tests/test_gbmtransient.py::test_einbau_erwartungswert PASSED            [ 70%]
+tests/test_gbmtransient.py::test_verschiebungen_trennen_jedes_paar PASSED [ 75%]
+tests/test_gbmtransient.py::test_konfigurationen_vollstaendig PASSED     [ 79%]
+tests/test_gbmtransient.py::test_schwelle_aus_histogramm PASSED          [ 83%]
+tests/test_gbmtransient.py::test_verzeichnis_hoechste_version PASSED     [ 87%]
+tests/test_gbmtransient.py::test_ende_zu_ende PASSED                     [ 91%]
+tests/test_gbmtransient.py::test_pruefsumme_wird_geprueft PASSED         [ 95%]
+tests/test_gbmtransient.py::test_holen_ohne_netz PASSED                  [100%]
+
+============================= 24 passed in 10.36s ==============================
