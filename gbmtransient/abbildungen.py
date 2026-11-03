@@ -180,7 +180,7 @@ def abb4(plt, ziel, r, tage, beste, grund, test, w):
         ax.set_title(f"Puls „{name}“", loc="left")
         _komma(ax, "x")
     achsen[0].set_ylabel("Nachweiswahrscheinlichkeit (%)")
-    achsen[0].legend(loc="upper left")
+    achsen[0].legend(loc="lower right")
     fig.tight_layout()
     fig.savefig(ziel / "abb4_effizienz.png")
     plt.close(fig)

@@ -128,5 +128,6 @@ ol { padding-left: 6.2mm; }
 /* ---------- raster figures (Teaser-Bericht) and code blocks ---------- */
 p > img { max-width: 100%; height: auto; display: block; margin: 1mm auto 1.5mm; break-inside: avoid; }
 p:has(> img) { break-inside: avoid; }  /* figure and its caption in one paragraph stay on one page */
-pre { background: #f4f6f8; padding: 2mm 3mm; font-size: 8pt; white-space: pre-wrap; break-inside: avoid; hyphens: none; -webkit-hyphens: none; }
+pre { background: #f4f6f8; padding: 2mm 3mm; font-size: 7.6pt; line-height: 1.35; white-space: pre; overflow: hidden; break-inside: avoid; hyphens: none; -webkit-hyphens: none; }
+td code { white-space: nowrap; }
 code { hyphens: none; -webkit-hyphens: none; }
