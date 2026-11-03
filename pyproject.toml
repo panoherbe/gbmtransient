@@ -1,0 +1,23 @@
+[project]
+name = "gbmtransient"
+version = "0.1.0"
+description = "Search for short gamma-ray and X-ray transients in open Fermi GBM data, with optimised trigger and validation against the GBM trigger catalogue (prototype)"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Panagiotis Herbe" }]
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "astropy>=6.0"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.8"]
+test = ["pytest>=8"]
+
+[project.scripts]
+gbmtransient = "gbmtransient.cli:main"
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["gbmtransient"]

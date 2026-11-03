@@ -1,0 +1,10 @@
+name: gbmtransient
+services:
+  gbmtransient:
+    build: .
+    volumes:
+      - ./daten:/daten
+      - ./nachweis:/nachweis
+  test:
+    build: .
+    entrypoint: ["python", "-m", "pytest", "-q", "tests"]

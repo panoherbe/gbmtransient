@@ -1,0 +1,17 @@
+gbmtransient
+Copyright 2026 Panagiotis Herbe
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+The measured results in nachweis/ are derived from open data of the Fermi Gamma-ray Burst Monitor (GBM),
+retrieved from the High Energy Astrophysics Science Archive Research Center (HEASARC), NASA Goddard Space Flight
+Center: https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/daily/ (CTIME and position history files) and the
+HEASARC tables fermigtrig and fermigbrst (TAP service https://heasarc.gsfc.nasa.gov/xamin/vo/tap).
+GBM data have not been proprietary at any time during the mission (Fermi Science Support Center, Fermi Data Policy);
+"HEASARC materials are all available freely for your use" (HEASARC, Use of HEASARC Data).
+
+This research has made use of data and/or software provided by the High Energy Astrophysics Science Archive
+Research Center (HEASARC), which is a service of the Astrophysics Science Division at NASA/GSFC.
+
+Raw data are not part of this repository; `gbmtransient holen` downloads them. This project is not affiliated with
+or endorsed by NASA or the Fermi GBM team.
