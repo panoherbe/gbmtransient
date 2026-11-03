@@ -514,6 +514,9 @@ def bericht_md(r: dict) -> str:
                      + ("Die kürzeste Zeitskala hier ist 256 ms; für sehr kurze, schwache Ausbrüche ist CTIME zu grob."
                         if any(x["bord_zeitskala_ms"] is not None and x["bord_zeitskala_ms"] < 256 for x in gv) else "")
                      ) if gv else ""
+    grenze_far = (f" Die auf Trainingstagen bestimmte Schwelle hält die Grenze für zufällige Fehlalarme auf den "
+                  f"Testtagen nicht ({de(bt['zufall']['je_tag'], 2)} je Tag)." if bt["zufall"]["je_tag"] > o["far_max_je_tag"]
+                  else "")
     versatz_wort = "vor" if (r["zeitversatz_s"]["median"] or 0) < 0 else "nach"
     versatz_betrag = abs(r["zeitversatz_s"]["median"] or 0)
     return f"""# gbmtransient – Suche nach kurzen Gamma- und Röntgentransienten in Messdaten des Fermi GBM
@@ -551,7 +554,10 @@ Nachweiswahrscheinlichkeit bei höchstens {de(o['far_max_je_tag'], 1)} zufällig
 
 Der GBM an Bord des Fermi-Satelliten (NASA, seit 2008) misst mit zwölf NaI(Tl)-Detektoren (8 keV bis 1 MeV) und
 zwei BGO-Detektoren die Zählraten aus allen Richtungen, die nicht von der Erde verdeckt sind. An Bord löst ein
-Trigger aus, wenn mindestens zwei NaI-Detektoren gleichzeitig eine Schwelle über dem Untergrund überschreiten. Die
+Trigger aus, wenn mindestens zwei NaI-Detektoren gleichzeitig eine Schwelle über dem Untergrund überschreiten. Jeder
+Detektor zählt Photonen und ordnet ihre Energie in Kanäle ein; die Messung prägen die Totzeit (gemeldet als
+Lebenszeit je Intervall), die Ausrichtung der Detektoren mit ihrer Winkelabhängigkeit und ein Untergrund, der sich
+mit der Bahn ändert (geomagnetische Breite, Südatlantische Anomalie, Erde im Blickfeld). Die
 Frage dieses Vorhabens: Wie weit lässt sich die Empfindlichkeit einer nachträglichen Suche in den kontinuierlichen
 Daten steigern, wenn Untergrundschätzung, Zeitskalen, Energieband, Zahl der Detektoren und Schwelle gemeinsam
 optimiert werden, und wie verlässlich ist das gegen den offiziellen Triggerkatalog? Der Verfasser hat 2020 in
@@ -711,7 +717,9 @@ gemessene Verhältnis 27–50 zu 50–300 keV beträgt im Median {de(am['haerte_
 - Die Detektorantwort ist vereinfacht (Kosinus, ohne Streuung, ohne Energieabhängigkeit); die Nachweisgrenzen
   gelten für dieses Modell und für die zwei Pulsformen, nicht für jede Form eines echten Ausbruchs.
 - Die Nebenbedingungen (0,1 zufällige Fehlalarme, 2 Kandidaten je Tag) sind gesetzte Annahmen; Abb. 3 zeigt,
-  wie sich das Ergebnis mit dem Prüfbudget ändert.
+  wie sich das Ergebnis mit dem Prüfbudget ändert.{grenze_far}
+- Ausgewertet sind nur die CTIME-Daten (0,256 s); die Einzelereignisdaten (TTE) mit feiner Zeitauflösung sind nicht
+  genutzt. Sehr kurze Ausbrüche und terrestrische Gammablitze sind damit kaum erfassbar.
 - Unbestätigte Kandidaten sind nicht geprüft; ihre Einordnung beruht auf Merkmalen.
 - Fenster an Tagesgrenzen und neben Datenlücken werden verworfen; Trigger dort gelten als nicht abgedeckt.
 - Ausgewertet wurden {d['tage']} Tage aus einer Phase hoher Sonnenaktivität; andere Zeiträume können andere
