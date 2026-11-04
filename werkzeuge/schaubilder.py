@@ -123,7 +123,9 @@ def himmel(plt, d: dict, ziel: Path, anzahl: int | None = None, groesse=(12.8, 7
     n_erk = sum(g["erkannt"] for g in grb)
     if titel:
         fig.text(0.06, 0.93, "Gammablitze am Himmel, 01.09.–31.10.2025", fontsize=17, fontweight="bold", color=TEXT)
-        zeile = (f"{len(alle)} Gammablitze im offiziellen Katalog · {n_erk} gefunden" if anzahl is None else
+        t = d["r"]["bewertung"]["test"]["beste"]["katalog"]["GRB"]  # Prüftage, nicht zur Wahl benutzt
+        zeile = (f"{len(alle)} Gammablitze im offiziellen Katalog · {n_erk} gefunden, auf den Prüftagen "
+                 f"{t['erkannt']} von {t['abgedeckt']}" if anzahl is None else
                  f"{len(grb)} von {len(alle)} Gammablitzen, zeitlich geordnet · {n_erk} gefunden")
         fig.text(0.06, 0.885, zeile + " · Band: Milchstraße", fontsize=12, color=TEXT2)
     leg = ax.legend(loc="lower right", bbox_to_anchor=(1.02, -0.08), fontsize=10, labelcolor=TEXT)

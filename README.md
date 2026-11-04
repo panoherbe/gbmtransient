@@ -1,10 +1,10 @@
-![gbmtransient: Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi finden. 49 von 54 Gammablitzen des offiziellen Katalogs gefunden.](medien/hero.png)
+![gbmtransient: Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi finden. 49 von 54 Gammablitzen des offiziellen Katalogs gefunden, auf den Prüftagen 28 von 31.](medien/hero.png)
 
 # gbmtransient
 
 **Ein Programm findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi, wählt seine
 Einstellungen per Optimierung und belegt seine Trefferquote am offiziellen Katalog: 49 von
-54 Gammablitzen gefunden.** Es läuft heute: ausgewertet am 03.11.2026 auf 61 Tagen Messdaten
+54 Gammablitzen gefunden, auf den Prüftagen 28 von 31.** Es läuft heute: ausgewertet am 03.11.2026 auf 61 Tagen Messdaten
 von zwölf Detektoren, 24 Tests bestanden unter Linux und Windows.
 
 *Finds short gamma-ray bursts in open NASA Fermi GBM data with an optimised, statistically calibrated trigger and
@@ -35,10 +35,10 @@ gearbeitet. Dieses Vorhaben ist davon unabhängig: eigene Fragestellung, eigener
 
 <details><summary>Untertitel als Text</summary>
 
-- **0:00** Vorhaben · läuft heute. gbmtransient findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi und belegt, wie zuverlässig das gelingt: mit optimierten Einstellungen und gemessener Fehlalarmrate.
+- **0:00** Prototyp · läuft heute. gbmtransient findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi und belegt, wie zuverlässig das gelingt: mit optimierten Einstellungen und gemessener Fehlalarmrate.
 - **0:05** Worum es geht: Gammablitze sind die hellsten bekannten Explosionen im All, Sekundenbruchteile bis Minuten lang. Der NASA-Satellit Fermi beobachtet seit 2008 mit zwölf Detektoren den ganzen Himmel, den die Erde nicht verdeckt. Ausgewertet: 61 Tage (01.09. bis 31.10.2025), 793 Dateien, 9,3 GB.
 - **0:11** Alle 54 Gammablitze aus dem offiziellen Katalog erscheinen in zeitlicher Folge am Himmel: gold, wenn gbmtransient sie findet.
-- **0:16** 49 von 54 gefunden, 5 nicht (grau). Das Band ist die Milchstraße; Gammablitze kommen aus allen Richtungen.
+- **0:16** 49 von 54 gefunden, auf den Prüftagen 28 von 31. Das Band ist die Milchstraße; Gammablitze kommen aus allen Richtungen.
 - **0:20** Ein Tag im Orbit: Die Zählrate schwankt mit der Bahn um die Erde; über dem Südatlantik schalten die Detektoren ab. Darin muss ein Ausbruch von Sekunden gefunden werden.
 - **0:26** Ein Gammablitz am 22.10.2025: Die Detektoren, die zur Quelle zeigen, sehen ihn deutlich, die abgewandten kaum. Genau dieses Muster nutzt das Verfahren.
 - **0:32** Vom Rohsignal zum Treffer: Signifikanz je Detektor, dann die Koinzidenz über die Detektoren.
@@ -47,7 +47,7 @@ gearbeitet. Dieses Vorhaben ist davon unabhängig: eigene Fragestellung, eigener
 - **0:49** Erst die Tests: 24 von 24 bestanden, ebenso unter Windows in der automatischen Prüfung.
 - **0:52** Dann ein Befehl für alle 61 Tage, nur aus der unveränderten Rohablage.
 - **0:55** Zur Kontrolle ein zweiter Lauf mit anderer Aufteilung auf die Prozessoren: alle Ergebnisse identisch.
-- **0:59** Was nachgewiesen ist: 49 von 54 Gammablitzen gefunden; 61,2 % der künstlichen Ausbrüche erkannt statt 55,6 %; 24 Tests unter Linux und Windows; zweiter Lauf identisch.
+- **0:59** Was nachgewiesen ist: 49 von 54 Gammablitzen gefunden, auf den Prüftagen 28 von 31; 61,2 % der künstlichen Ausbrüche erkannt statt 55,6 %; 24 Tests unter Linux und Windows; zweiter Lauf identisch.
 - **1:05** Ehrlich gesagt: 0,33 statt 0,1 zufällige Fehlalarme je Tag an den Prüftagen; 5 Gammablitze verpasst, meist sehr kurze; 80 Meldungen ohne Katalogeintrag, nicht geprüft; Detektormodell vereinfacht.
 - **1:11** Selbst prüfen: Code, Bericht, Testprotokoll und Abrufliste liegen offen. Lizenz: AGPL-3.0.
 
@@ -58,7 +58,7 @@ gearbeitet. Dieses Vorhaben ist davon unabhängig: eigene Fragestellung, eigener
 | | |
 |---|---|
 | ![Die Gammablitze des Katalogs am Himmel, gefunden in Gold, nicht gefunden in Grau](medien/himmel.png) | ![Ein Tag im Orbit: Zählrate, Bahn, Südatlantische Anomalie](medien/orbit.png) |
-| **Zwei Monate Himmel.** Alle 54 Gammablitze des offiziellen Katalogs vom 01.09. bis 31.10.2025 in Himmelskoordinaten: 49 findet gbmtransient (gold), 5 nicht (grau). Das violette Band ist die Milchstraße. | **Ein Tag im Orbit.** Die Zählrate folgt der Bahn um die Erde (unten ihre Breite); über dem Südatlantik sind die Detektoren aus (orange). Der Gammablitz um 22:34 UTC ist ein kurzer Ausschlag darin. |
+| **Zwei Monate Himmel.** Alle 54 Gammablitze des offiziellen Katalogs vom 01.09. bis 31.10.2025 in Himmelskoordinaten: 49 findet gbmtransient (gold), 5 nicht (grau); auf den Prüftagen 28 von 31. Das violette Band ist die Milchstraße. | **Ein Tag im Orbit.** Die Zählrate folgt der Bahn um die Erde (unten ihre Breite); über dem Südatlantik sind die Detektoren aus (orange). Der Gammablitz um 22:34 UTC ist ein kurzer Ausschlag darin. |
 | ![Ein Gammablitz in allen zwölf Detektoren](medien/detektoren.png) | ![Vom Rohsignal über die Signifikanz je Detektor zur Koinzidenz und zum Treffer](medien/treffer.png) |
 | **Zwölf Detektoren, ein Ausbruch.** Der Gammablitz vom 22.10.2025 in allen Detektoren, sortiert nach dem Winkel zur Quelle: Die zur Quelle zeigenden (gold) sehen ihn deutlich. | **Vom Rohsignal zum Treffer.** Rohzählungen, Signifikanz je Detektor (Farbskala bei 10 σ gekappt), Koinzidenz mit der Schwelle von 4,68 σ; hier bis zu 39 σ. |
 | ![Nachweiswahrscheinlichkeit künstlicher Ausbrüche nach Stärke](medien/empfindlichkeit.png) | ![Gemessenes Muster über die Detektoren gegen das Modell](medien/antwortmodell.png) |
@@ -71,7 +71,7 @@ Gemessen am 03.11.2026 auf den Daten vom 01.09. bis 31.10.2025; Quelle jeder Zah
 
 | Was Sie brauchen | Läuft hier schon |
 |---|---|
-| Auffällige Ereignisse in einem Verbund vieler Detektoren erkennen | Koinzidenz über zwölf Detektoren: 49 von 54 Gammablitzen des offiziellen Katalogs gefunden (91 %; eine an den Bord-Trigger angelehnte Einstellung: 41) |
+| Auffällige Ereignisse in einem Verbund vieler Detektoren erkennen | Koinzidenz über zwölf Detektoren: 49 von 54 Gammablitzen des offiziellen Katalogs gefunden, auf den Prüftagen 28 von 31 (Tage, die nicht zur Wahl der Einstellung dienten); eine an den Bord-Trigger angelehnte Einstellung: 41 von 54, auf den Prüftagen 24 von 31 |
 | Fehlalarme messen | Rate zufälliger Fehlalarme über Zeitverschiebungen gemessen; Grenzen je Tag als Nebenbedingung der Optimierung (an den Prüftagen überschritten, siehe „Ehrlich gesagt“) |
 | Einstellungen begründet wählen statt raten | Optimierung über 162 Einstellungen, gewählt auf 31 Tagen, geprüft auf 30 anderen |
 | Güte belegen statt behaupten | 21.805 künstliche Ausbrüche bekannter Stärke eingebaut und wiedergesucht: 61,2 % erkannt statt 55,6 % (Prüftage) |
