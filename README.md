@@ -1,3 +1,5 @@
+![gbmtransient: Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi finden. 49 von 54 Gammablitzen des offiziellen Katalogs gefunden.](medien/hero.png)
+
 # gbmtransient
 
 **Ein Programm findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi, wählt seine
@@ -5,30 +7,49 @@ Einstellungen per Optimierung und belegt seine Trefferquote am offiziellen Katal
 54 Gammablitzen gefunden.** Es läuft heute: ausgewertet am 03.11.2026 auf 61 Tagen Messdaten
 von zwölf Detektoren, 24 Tests bestanden unter Linux und Windows.
 
-*Prototype: finds short gamma-ray bursts in open NASA Fermi GBM data with an optimised, statistically calibrated
-trigger and measures its hit rate against the official catalogue. Documentation in German. Not affiliated with NASA.*
+*Finds short gamma-ray bursts in open NASA Fermi GBM data with an optimised, statistically calibrated trigger and
+measures its hit rate against the official catalogue. Documentation in German. Not affiliated with NASA.*
 
-## Rundgang (69 Sekunden, ohne Ton, mit Untertiteln)
+## Was das zeigt
 
-![Rundgang: Tests, Auswertung von 61 Tagen, ein echter Gammablitz, gemessene Empfindlichkeit, Abgleich mit dem Katalog, Grenzen](medien/rundgang.gif)
+Gammablitze sind die hellsten bekannten Explosionen im All: Sekundenbruchteile bis Minuten lang, aus allen Richtungen
+des Himmels. Der Gamma-ray Burst Monitor (GBM) an Bord des NASA-Satelliten Fermi beobachtet sie seit 2008 mit zwölf
+Szintillationsdetektoren, die in verschiedene Richtungen zeigen. Die Messdaten sind offen: Zählraten alle 0,256
+Sekunden, mitten in einem Untergrund, der mit der Bahn um die Erde schwankt.
+
+gbmtransient sucht darin Ausbrüche, wie es ein Prüfdienst in jedem Messnetz tun müsste: Es bewertet jeden Detektor
+statistisch, verlangt, dass mehrere Detektoren zugleich anschlagen, misst die Rate zufälliger Fehlalarme und wählt
+seine Einstellungen per Optimierung, auf einem Teil der Tage gewählt und auf den übrigen geprüft. Ob das trägt,
+entscheidet eine unabhängige Referenz: der offizielle Triggerkatalog des GBM. Jede Zahl auf dieser Seite stammt aus
+der Ergebnisdatei des Laufs; Grenzen und Fehlschläge stehen im Bericht.
+
+Der Verfasser hat 2020 in seiner Masterarbeit in Zusammenarbeit mit der NASA, als Gastwissenschaftler am Marshall
+Space Flight Center (Fermi-GBM-Team), an der Erkennung von Röntgenausbrüchen in den Messdaten desselben Instruments
+gearbeitet. Dieses Vorhaben ist davon unabhängig: eigene Fragestellung, eigener Code, Messdaten von 2025.
+
+## Rundgang (75 Sekunden, ohne Ton, mit Untertiteln)
+
+![Rundgang: Gammablitze am Himmel, ein Tag im Orbit, ein Ausbruch in zwölf Detektoren, vom Rohsignal zum Treffer, gemessene Empfindlichkeit, Tests und Kontrolllauf, Grenzen](medien/rundgang.gif)
 
 [Video herunterladen (MP4, 1,0 MB)](medien/rundgang.mp4) · [Standbild](medien/poster.png)
 
 <details><summary>Untertitel als Text</summary>
 
-- **0:00** Prototyp · läuft heute. gbmtransient findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi und misst, wie zuverlässig das gelingt: mit optimierten Einstellungen und gemessener Fehlalarmrate.
-- **0:05** Echte, offene Messdaten: 61 Tage (01.09. bis 31.10.2025) von zwölf Detektoren, 793 Dateien mit 9,3 GB, jede unverändert abgelegt; 182 Ereignisse im offiziellen Katalog, davon 54 Gammablitze, als Maßstab; 21.805 künstliche Ausbrüche mit bekannter Stärke.
-- **0:11** Erst die Tests: 24 von 24 bestanden, ebenso unter Windows in der automatischen Prüfung.
-- **0:14** Dann ein Befehl für alle 61 Tage, nur aus der unveränderten Rohablage.
-- **0:19** Zur Kontrolle ein zweiter Lauf mit anderer Aufteilung auf die Prozessoren: alle Ergebnisse identisch.
-- **0:23** Der Bericht: Jede Zahl stammt aus der Ergebnisdatei des Laufs; Grenzen und Fehlschläge stehen offen darin.
-- **0:28** Ein echter Gammablitz vom 22.10.2025: In mehreren Detektoren zugleich steigen die Zählraten über den Untergrund; die Prüfgröße überschreitet die Schwelle deutlich.
-- **0:34** Künstliche Ausbrüche bekannter Stärke wiedergesucht: Die optimierte Einstellung findet die Hälfte schon ab 87 statt 108 Zählungen pro Sekunde (kurze Pulse), ab 50 statt 67 (lange).
-- **0:41** 162 Einstellungen verglichen, gewählt auf 31 Tagen, geprüft auf 30 anderen: Die Rangfolge hält auf ungesehenen Tagen.
-- **0:47** Das Modell der Detektorausrichtung passt zu den gemessenen Mustern von 54 Gammablitzen (Korrelation im Median 0,92).
-- **0:52** Was nachgewiesen ist: 49 von 54 Gammablitzen gefunden; 61,2 % der künstlichen Ausbrüche erkannt statt 55,6 %; 24 Tests unter Linux und Windows; zweiter Lauf identisch.
-- **0:58** Ehrlich gesagt: 0,33 statt 0,1 zufällige Fehlalarme je Tag an den Prüftagen; 5 Gammablitze verpasst, meist sehr kurze; 80 Meldungen ohne Katalogeintrag, nicht geprüft; Detektormodell vereinfacht.
-- **1:04** Selbst prüfen: Code, Bericht, Testprotokoll und Abrufliste liegen offen. Apache 2.0.
+- **0:00** Vorhaben · läuft heute. gbmtransient findet kurze Gammablitze in den offenen Messdaten des NASA-Satelliten Fermi und belegt, wie zuverlässig das gelingt: mit optimierten Einstellungen und gemessener Fehlalarmrate.
+- **0:05** Worum es geht: Gammablitze sind die hellsten bekannten Explosionen im All, Sekundenbruchteile bis Minuten lang. Der NASA-Satellit Fermi beobachtet seit 2008 mit zwölf Detektoren den ganzen Himmel, den die Erde nicht verdeckt. Ausgewertet: 61 Tage (01.09. bis 31.10.2025), 793 Dateien, 9,3 GB.
+- **0:11** Alle 54 Gammablitze aus dem offiziellen Katalog erscheinen in zeitlicher Folge am Himmel: gold, wenn gbmtransient sie findet.
+- **0:16** 49 von 54 gefunden, 5 nicht (grau). Das Band ist die Milchstraße; Gammablitze kommen aus allen Richtungen.
+- **0:20** Ein Tag im Orbit: Die Zählrate schwankt mit der Bahn um die Erde; über dem Südatlantik schalten die Detektoren ab. Darin muss ein Ausbruch von Sekunden gefunden werden.
+- **0:26** Ein Gammablitz am 22.10.2025: Die Detektoren, die zur Quelle zeigen, sehen ihn deutlich, die abgewandten kaum. Genau dieses Muster nutzt das Verfahren.
+- **0:32** Vom Rohsignal zum Treffer: Signifikanz je Detektor, dann die Koinzidenz über die Detektoren.
+- **0:38** Liegt der zweitstärkste Detektor über der Schwelle von 4,68 σ, meldet gbmtransient einen Treffer; hier mit bis zu 39 σ.
+- **0:42** 21.805 künstliche Ausbrüche bekannter Stärke eingebaut und wiedergesucht: Die optimierte Einstellung findet die Hälfte schon ab 87 statt 108 Zählungen pro Sekunde (kurze Pulse), ab 50 statt 67 (lange).
+- **0:49** Erst die Tests: 24 von 24 bestanden, ebenso unter Windows in der automatischen Prüfung.
+- **0:52** Dann ein Befehl für alle 61 Tage, nur aus der unveränderten Rohablage.
+- **0:55** Zur Kontrolle ein zweiter Lauf mit anderer Aufteilung auf die Prozessoren: alle Ergebnisse identisch.
+- **0:59** Was nachgewiesen ist: 49 von 54 Gammablitzen gefunden; 61,2 % der künstlichen Ausbrüche erkannt statt 55,6 %; 24 Tests unter Linux und Windows; zweiter Lauf identisch.
+- **1:05** Ehrlich gesagt: 0,33 statt 0,1 zufällige Fehlalarme je Tag an den Prüftagen; 5 Gammablitze verpasst, meist sehr kurze; 80 Meldungen ohne Katalogeintrag, nicht geprüft; Detektormodell vereinfacht.
+- **1:11** Selbst prüfen: Code, Bericht, Testprotokoll und Abrufliste liegen offen. Lizenz: AGPL-3.0.
 
 </details>
 
@@ -36,10 +57,12 @@ trigger and measures its hit rate against the official catalogue. Documentation 
 
 | | |
 |---|---|
-| ![Ein echter Gammablitz in mehreren Detektoren zugleich](medien/02-gammablitz.png) | ![Nachweiswahrscheinlichkeit nach Stärke, gewählte Einstellung gegen Grundeinstellung](medien/03-empfindlichkeit.png) |
-| **Ein echter Gammablitz** (22.10.2025): Die Zählraten steigen in mehreren Detektoren zugleich; die Prüfgröße liegt weit über der Schwelle. | **Gemessen statt behauptet:** Künstliche Ausbrüche bekannter Stärke wiedergefunden; die optimierte Einstellung (blau) sieht schwächere als die Grundeinstellung (orange). |
-| ![Gemessenes Muster über die Detektoren gegen das Modell](medien/05-antwortmodell.png) | ![Terminal: Tests, Auswertung, Kontrolllauf](medien/01-lauf.png) |
-| **Physik geprüft:** Welcher Detektor wie viel sieht, folgt bei 54 echten Gammablitzen dem Modell der Detektorausrichtung (Korrelation im Median 0,92). | **Nachvollziehbar:** 24 Tests bestanden, ein Befehl für alle 61 Tage, ein zweiter Lauf mit identischen Ergebnissen. |
+| ![Die Gammablitze des Katalogs am Himmel, gefunden in Gold, nicht gefunden in Grau](medien/himmel.png) | ![Ein Tag im Orbit: Zählrate, Bahn, Südatlantische Anomalie](medien/orbit.png) |
+| **Zwei Monate Himmel.** Alle 54 Gammablitze des offiziellen Katalogs vom 01.09. bis 31.10.2025 in Himmelskoordinaten: 49 findet gbmtransient (gold), 5 nicht (grau). Das violette Band ist die Milchstraße. | **Ein Tag im Orbit.** Die Zählrate folgt der Bahn um die Erde (unten ihre Breite); über dem Südatlantik sind die Detektoren aus (orange). Der Gammablitz um 22:34 UTC ist ein kurzer Ausschlag darin. |
+| ![Ein Gammablitz in allen zwölf Detektoren](medien/detektoren.png) | ![Vom Rohsignal über die Signifikanz je Detektor zur Koinzidenz und zum Treffer](medien/treffer.png) |
+| **Zwölf Detektoren, ein Ausbruch.** Der Gammablitz vom 22.10.2025 in allen Detektoren, sortiert nach dem Winkel zur Quelle: Die zur Quelle zeigenden (gold) sehen ihn deutlich. | **Vom Rohsignal zum Treffer.** Rohzählungen, Signifikanz je Detektor (Farbskala bei 10 σ gekappt), Koinzidenz mit der Schwelle von 4,68 σ; hier bis zu 39 σ. |
+| ![Nachweiswahrscheinlichkeit künstlicher Ausbrüche nach Stärke](medien/empfindlichkeit.png) | ![Gemessenes Muster über die Detektoren gegen das Modell](medien/antwortmodell.png) |
+| **Gemessen statt behauptet.** 21.805 künstliche Ausbrüche bekannter Stärke wiedergesucht: Die optimierte Einstellung (blau) findet schwächere als die Grundeinstellung (orange). | **Physik geprüft.** Welcher Detektor wie viel sieht, folgt bei 54 Gammablitzen dem Modell der Detektorausrichtung (Korrelation im Median 0,92). |
 
 ## Was Sie brauchen → läuft hier schon
 
@@ -81,13 +104,18 @@ und was nicht, steht in Zahlen im Bericht, einschließlich der Fehlschläge.
 - **Zufällige Fehlalarme:** An den Prüftagen 0,33 je Tag statt der auf den Trainingstagen
   eingehaltenen 0,1. Eine Schwelle aus wenigen Wochen trägt die Schwankung von Tag zu Tag nicht; ein Betrieb
   bräuchte eine laufende Nachkalibrierung.
-- **Verpasst:** 5 von 54 Gammablitzen, meist sehr kurze; für sie sind
-  Daten mit 0,256 s Auflösung zu grob.
+- **Verpasst:** 5 von 54 Gammablitzen, meist sehr kurze; für sie sind Daten mit 0,256 s
+  Auflösung zu grob.
 - **Nicht geprüft:** 80 Meldungen ohne Katalogeintrag in 61 Tagen, nur nach Merkmalen
   eingeordnet (Rand der Strahlungszone über dem Südatlantik, vermutlich schwache Sonneneruptionen, ohne Zuordnung).
 - **Vereinfacht:** Das Modell der Detektoren (Kosinus, ohne Streuung); die Nachweisgrenzen gelten für dieses Modell.
 - **Was ein Auftrag ergänzen würde:** Anpassung an die Daten und Meldewege des Auftraggebers, laufende
   Nachkalibrierung der Schwellen, Schutzabstand vor Datenlücken, Betrieb in Echtzeit.
+
+## Lizenz
+
+Ab 04.11.2026 AGPL-3.0 (`LICENSE`); frühere Stände bis Commit 7f6f31a Apache-2.0. Auftraggeber erhalten im Auftrag
+die vertraglich vereinbarte Lizenz.
 
 ## Kontakt
 
@@ -154,4 +182,4 @@ kein Ersatz für die Auswertung des GBM-Teams.
 - This research has made use of data and/or software provided by the High Energy Astrophysics Science Archive
   Research Center (HEASARC), which is a service of the Astrophysics Science Division at NASA/GSFC.
 
-Die Rohdaten sind nicht Teil des Repositorys. Code: Apache 2.0 (`LICENSE`, `NOTICE`).
+Die Rohdaten sind nicht Teil des Repositorys. Code: AGPL-3.0 (`LICENSE`, `NOTICE`), siehe „Lizenz“ oben.
