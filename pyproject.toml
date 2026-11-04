@@ -3,7 +3,7 @@ name = "gbmtransient"
 version = "0.1.0"
 description = "Search for short gamma-ray and X-ray transients in open Fermi GBM data, with optimised trigger and validation against the GBM trigger catalogue (prototype)"
 readme = "README.md"
-license = "Apache-2.0"
+license = "AGPL-3.0-only"
 authors = [{ name = "Panagiotis Herbe" }]
 requires-python = ">=3.11"
 dependencies = ["numpy>=1.26", "astropy>=6.0"]
