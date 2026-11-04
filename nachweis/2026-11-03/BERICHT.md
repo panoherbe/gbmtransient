@@ -1,6 +1,6 @@
 # gbmtransient – Suche nach kurzen Gamma- und Röntgentransienten in Messdaten des Fermi GBM
 
-**Technischer Bericht, Version 0.1.0** · Vorhaben des Bieters Panagiotis Herbe · Auswertung vom
+**Technischer Bericht, Version 0.1.0** · Vorhaben von Panagiotis Herbe · Auswertung vom
 03.11.2026 · Quellcode, Tests und Rohdaten-Manifest:
 https://github.com/panoherbe/gbmtransient
 

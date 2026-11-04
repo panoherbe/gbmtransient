@@ -8,7 +8,7 @@ Actions.
 
 | | |
 |---|---|
-| Linux | eigener Server mit Ubuntu 24.04.5 LTS, 16 Kerne, 62 GB Arbeitsspeicher; Docker-Image auf `python:3.12-slim` mit Python 3.12.13, NumPy 2.5.4, Astropy 8.0.2, Matplotlib 3.11.2 (Versionen im `Dockerfile` festgelegt) |
+| Linux | eigener Server mit Ubuntu 24.04.5 LTS, Intel Core i7-11700B mit 8 Kernen und 16 Threads, 62 GB Arbeitsspeicher; Docker-Image auf `python:3.12-slim` mit Python 3.12.13, NumPy 2.5.4, Astropy 8.0.2, Matplotlib 3.11.2 (Versionen im `Dockerfile` festgelegt) |
 | Windows und Linux in der CI | GitHub Actions, Workflow `.github/workflows/tests.yml`, Lauf 41718520863 zum Commit `1223818` (03.11.2026, 21:05–21:07 UTC; `https://github.com/panoherbe/gbmtransient/actions/runs/41718520863`): `windows-latest` (Image windows-2025-vs2026) mit Python 3.11.9, 3.12.10, 3.13.17 und `ubuntu-latest` (Image ubuntu-24.04) mit Python 3.11.17, 3.12.16, 3.13.17; Astropy 8.0.2, NumPy 2.5.4 (unter Python 3.11: 2.4.6). Windows ist ein Server der CI, kein eigener Windows-Rechner |
 | Code | Rechnung mit Commit `da8a612`; Bericht, Listen und Abbildungen aus dem gespeicherten Zwischenstand neu geschrieben mit Commit `1223818` (geändert haben sich nur Berichtstext und Darstellung) |
 | Daten | Rohablage `raw/2026-11-03/` auf dem Linux-Server; ihr Manifest (URL, SHA-256, Größe, Abrufzeit je Datei) liegt im Ordner als `manifest.jsonl.gz` |
@@ -42,7 +42,9 @@ GitHub Actions.
 | (5) Bericht aus dem Zwischenstand mit Commit `1223818` | `ergebnisse.json` gleich bis auf ein neues Feld (`bewertung.test.zwilling.bindend`); CSV-Dateien Byte für Byte gleich; geändert nur `BERICHT.md` und die Legende in Abb. 4 |
 
 Der Bericht `BERICHT.pdf` ist aus `BERICHT.md` und diesem Protokoll gerendert (`werkzeuge/pdf.py`: Markdown, HTML,
-PDF; Abbildungen eingebettet).
+PDF; Abbildungen eingebettet). Am 04.11.2026 neu gerendert nach zwei Textkorrekturen: Seite 1 nennt „Vorhaben von
+Panagiotis Herbe“, und die Umgebung nennt 8 Kerne und 16 Threads statt „16 Kerne“ (`lscpu`). Zahlen, Ergebnisdateien und
+Abbildungen sind unverändert.
 
 ## Was die 24 Tests prüfen
 

@@ -80,7 +80,7 @@ def main() -> None:
     titel = re.search(r"^# (.*)$", md, re.M).group(1)
     body = nach_html(einbetten(md, a.nachweis))
     n = drucken(seite(body, titel, "gbmtransient · Technischer Bericht", a.fuss), a.nachweis / "BERICHT.pdf", titel,
-                "Vorhaben des Bieters Panagiotis Herbe", a.chrome)
+                "Vorhaben von Panagiotis Herbe", a.chrome)
     print(f"{n} Seiten: {a.nachweis / 'BERICHT.pdf'}")
 
 

@@ -523,7 +523,7 @@ def bericht_md(r: dict) -> str:
     versatz_betrag = abs(r["zeitversatz_s"]["median"] or 0)
     return f"""# gbmtransient – Suche nach kurzen Gamma- und Röntgentransienten in Messdaten des Fermi GBM
 
-**Technischer Bericht, Version {r['version']}** · Vorhaben des Bieters Panagiotis Herbe · Auswertung vom
+**Technischer Bericht, Version {r['version']}** · Vorhaben von Panagiotis Herbe · Auswertung vom
 {datetime.fromisoformat(r['erstellt'].replace('Z', '+00:00')).strftime('%d.%m.%Y')} · Quellcode, Tests und Rohdaten-Manifest:
 https://github.com/panoherbe/gbmtransient
 
