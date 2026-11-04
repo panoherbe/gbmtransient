@@ -8,7 +8,7 @@ Einstellungen per Optimierung und belegt seine Trefferquote am offiziellen Katal
 von zwölf Detektoren, 24 Tests bestanden unter Linux und Windows.
 
 *Finds short gamma-ray bursts in open NASA Fermi GBM data with an optimised, statistically calibrated trigger and
-measures its hit rate against the official catalogue. Documentation in German. Not affiliated with NASA.*
+measures its hit rate against the official catalogue. Documentation in German.*
 
 ## Was das zeigt
 

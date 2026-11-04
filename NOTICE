@@ -15,5 +15,4 @@ GBM data have not been proprietary at any time during the mission (Fermi Science
 This research has made use of data and/or software provided by the High Energy Astrophysics Science Archive
 Research Center (HEASARC), which is a service of the Astrophysics Science Division at NASA/GSFC.
 
-Raw data are not part of this repository; `gbmtransient holen` downloads them. This project is not affiliated with
-or endorsed by NASA or the Fermi GBM team.
+Raw data are not part of this repository; `gbmtransient holen` downloads them.
